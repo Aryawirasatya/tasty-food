@@ -2,16 +2,30 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Role;
+use App\Models\Permission;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
+        $admin = Role::firstOrCreate(['name' => 'admin']);
+        $superadmin = Role::firstOrCreate(['name' => 'superadmin']);
+
+        // Ambil semua permission
+        $permissions = Permission::all()->pluck('id');
+
+        // Superadmin dapat semua permission
+        $superadmin->permissions()->sync($permissions);
+
+        // Admin dapat sebagian permission (opsional, sesuai kebutuhan)
+        $admin->permissions()->sync(
+            Permission::whereIn('name', [
+                'roles.index',
+                'users.index',
+                // dll
+            ])->pluck('id')
+        );
     }
 }

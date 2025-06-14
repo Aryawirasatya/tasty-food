@@ -4,7 +4,11 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>Daftar Role</h1>
-        <a href="{{ route('admin.roles.create') }}" class="btn btn-primary">+ tambah Role</a>
+            @if(auth()->user()?->role?->permissions->contains('name', 'roles.create'))
+            <a href="{{ route('admin.roles.create') }}" class="btn btn-primary">Tambah Role</a>
+        @endif
+
+
     </div>
 
     @if(session('success'))

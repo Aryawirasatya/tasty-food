@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -25,6 +26,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware(['auth','IsAdmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('roles',RoleController::class);
+    Route::get('/admin/users/create', [UserController::class, 'create'])
+    ->middleware(['auth', 'IsAdmin', 'check_permission:users.create'])
+    ->name('admin.users.create');
+
+    
 
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

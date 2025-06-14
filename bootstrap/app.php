@@ -11,16 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
-        // using: function () {
-        //     Route::middleware(['web', 'auth'])
-        //         ->prefix('admin')
-        //         ->as('admin.')
-        //         ->group(base_path('routes/admin.php'));
-        // }
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'IsAdmin' => \App\Http\Middleware\IsAdmin::class,
+            'check_permission' => \App\Http\Middleware\CheckPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
