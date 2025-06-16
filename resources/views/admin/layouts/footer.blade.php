@@ -1,45 +1,33 @@
-<footer class="footer">
-  <div class="d-sm-flex justify-content-center justify-content-sm-between">
-    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
-      Copyright © 2023. Premium 
-      <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> 
-      from BootstrapDash. All rights reserved.
-    </span>
-    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-      Hand-crafted & made with <i class="ti-heart text-danger ms-1"></i>
-    </span>
-  </div>
-</footer>
+                </div> <!-- /.container-fluid -->
+            </div> <!-- End of Main Content -->
 
-<!-- partial -->
-</div>
-<!-- main-panel ends -->
-</div>
-<!-- page-body-wrapper ends -->
-</div>
-<!-- container-scroller -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
 
-<!-- plugins:js -->
-<script src="{{ asset('assets/admin/vendors/js/vendor.bundle.base.js') }}"></script>
-<!-- endinject -->
+        </div> <!-- End of Content Wrapper -->
+    </div> <!-- End of Page Wrapper -->
 
-<!-- Plugin js for this page -->
-<script src="{{ asset('assets/admin/vendors/chart.js/chart.umd.js') }}"></script>
-<script src="{{ asset('assets/admin/vendors/datatables.net/jquery.dataTables.js') }}"></script>
-{{-- <script src="{{ asset('assets/admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script> --}}
-<script src="{{ asset('assets/admin/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
-<script src="{{ asset('assets/admin/js/dataTables.select.min.js') }}"></script>
-<!-- End plugin js for this page -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-<!-- inject:js -->
-<script src="{{ asset('assets/admin/js/off-canvas.js') }}"></script>
-<script src="{{ asset('assets/admin/js/template.js') }}"></script>
-<script src="{{ asset('assets/admin/js/settings.js') }}"></script>
-<script src="{{ asset('assets/admin/js/todolist.js') }}"></script>
-<!-- endinject -->
-
-<!-- Custom js for this page-->
-<script src="{{ asset('assets/admin/js/jquery.cookie.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/admin/js/dashboard.js') }}"></script>
-{{-- <script src="{{ asset('assets/admin/js/Chart.roundedBarCharts.js') }}"></script> --}}
-<!-- End custom js for this page-->
+    {{-- JS Bundle --}}
+    <script src="{{ asset('assets/admin/vendor/jquery/jquery.min.js') }}"></script> 
+    <script src="{{ asset('assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/sb-admin-2.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/vendor/chart.js/Chart.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/demo/chart-area-demo.js') }}"></script>
+     <script src="{{ asset('assets/admin/js/demo/chart-pie-demo.js') }}"></script>
+    
+    @stack('scripts')
+</body>
+</html>

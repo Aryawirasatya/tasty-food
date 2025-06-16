@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -6,22 +7,28 @@ use App\Models\Permission;
 
 class PermissionSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
         $permissions = [
-            'roles.index',
-            'roles.create',
-            'roles.edit',
-            'roles.delete',
-            'users.index',
-            'users.create',
-            'users.edit',
-            'users.delete',
-            // Tambah sesuai kebutuhan
+            // Berita
+            'lihat_berita', 'tambah_berita', 'edit_berita', 'hapus_berita',
+
+            // Galeri
+            'lihat_galeri', 'tambah_galeri', 'edit_galeri', 'hapus_galeri',
+
+            // Kontak
+            'lihat_kontak', 'edit_kontak',
+
+            // Pesan
+            'lihat_pesan', 'hapus_pesan',
+
+            // Tentang
+            'lihat_tentang', // ⬅️ Tambahkan ini
+            'edit_tentang',
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
+        foreach ($permissions as $name) {
+            Permission::firstOrCreate(['name' => $name]);
         }
     }
 }

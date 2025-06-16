@@ -21,10 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_superadmin',
+        'role_id',
     ];
-    public function role(){
-        return $this->belongsTo(Role::class);
-    }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,17 +46,25 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_superadmin' => 'boolean',
         ];
     }
 
-    public function isAdmin()
-{
-    return $this->role && $this->role->name === 'superadmin';
-}
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
-public function isSuperAdmin()
-{
-    return $this->role && $this->role->name === 'superadmin';
-}
+    public function isAdmin()
+    {
+            return $this->role && $this->role->permissions->isNotEmpty();
+
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->is_superadmin === true;
+    }
+
 
 }

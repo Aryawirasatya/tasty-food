@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 class UserController extends Controller
 {
     /**
@@ -63,7 +65,7 @@ class UserController extends Controller
     public function edit(string $id)
     {     
         $roles = Role::all();
-        $User = User::findOrFail($id);
+        $user = User::findOrFail($id);
         return view('admin.users.edit',compact('user','roles'));
     }
 
@@ -71,22 +73,39 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        $user = User::findOrFail($id);
-        $request->validate([
-            'name'=> 'required',
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'role_id' => 'nullable|exists:roles,id',
-        ]);
+{
+    $user = User::findOrFail($id);
 
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'role_id' => 'nullable|exists:roles,id',
+        'password' => 'nullable|min:6',
+    ]);
 
-        $user->update([
-            'name'=> $request->name,
-            'email'=> $request->email,
-            'role_id'=> $request->role_id,
-        ]);
-        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+    // Siapkan data update
+    $data = [
+        'name' => $request->name,
+        'email' => $request->email,
+        'role_id' => $request->role_id,
+    ];
+
+    // Jika password diisi, hash dan masukkan ke data
+    if ($request->filled('password')) {
+        $data['password'] = Hash::make($request->password);
     }
+
+    // Superadmin boleh update status superadmin hanya untuk dirinya sendiri
+    if (Auth::user()->isSuperAdmin() && Auth::id() === $user->id) {
+    $data['is_superadmin'] = $request->has('is_superadmin');
+}
+
+    // Jalankan update
+    $user->update($data);
+
+    return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+}
+
 
     /**
      * Remove the specified resource from storage.

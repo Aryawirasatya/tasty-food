@@ -1,92 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
+<head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Skydash Admin</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendors/feather/feather.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendors/ti-icons/css/themify-icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendors/css/vendor.bundle.base.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendors/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendors/mdi/css/materialdesignicons.min.css') }}">
+    <title>@yield('title', 'Dashboard')</title>
 
-    <!-- Plugin css for this page -->
-    {{-- <link rel="stylesheet" href="{{ asset('assets/admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}"> --}}
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendors/datatables.net-bs5/dataTables.bootstrap5.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/admin/vendors/ti-icons/css/themify-icons.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/js/select.dataTables.min.css') }}">
+    <!-- Custom fonts for this template-->
+    <link href="{{ asset('assets/admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}">
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/admin/images/favicon.png') }}" />
+    <!-- Custom styles for this template-->
+    <link href="{{ asset('assets/admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 </head>
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-  <body>
-    <div class="container-scroller">
+        <!-- Sidebar -->
+        <!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
+        <div class="sidebar-brand-text mx-3">Tasty Food Admin</div>
+    </a>
 
-      <!-- partial:partials/_navbar.html -->
-      <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-    <a class="navbar-brand brand-logo me-5" href="{{ url('admin') }}">
-    <img src="{{ asset('assets/admin/images/logo.svg') }}" class="me-2" alt="logo" />
-  </a>
-  <a class="navbar-brand brand-logo-mini" href="{{ url('admin') }}">
-    <img src="{{ asset('assets/admin/images/logo-mini.svg') }}" alt="logo" />
-  </a>
-    </div>
-  <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-      <span class="icon-menu"></span>
-    </button>
-    <ul class="navbar-nav mr-lg-2">
-      <li class="nav-item nav-search d-none d-lg-block">
-        <div class="input-group">
-          <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
-          </div>
-        </div>
-      </li>
-    </ul>
-    <ul class="navbar-nav navbar-nav-right">
-      <li class="nav-item nav-profile dropdown">
+    <hr class="sidebar-divider my-0">
 
-      </li>
-    </ul>
-    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-      <span class="icon-menu"></span>
-    </button>
-  </div>
-    </nav>
-      <!-- partial -->
-      <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-  <ul class="nav">
-    <li class="nav-item">
-      <a class="nav-link" href="index.html">
-        <i class="icon-grid menu-icon"></i>
-        <span class="menu-title">Dashboard</span>
-      </a>
+    <!-- Dashboard -->
+    <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
     </li>
- 
-</nav>
-        <!-- partial -->
-        <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="row">
-              <div class="col-md-12 grid-margin">
-                <div class="row">
-                  <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Welcome John</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
- 
+
+    <hr class="sidebar-divider">
+
+    <!-- Fitur Khusus Superadmin -->
+    @if(auth()->user()?->isSuperAdmin())
+        <li class="nav-item {{ request()->is('admin/roles*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.roles.index') }}">
+                <i class="fas fa-user-shield"></i>
+                <span>Manajemen Role</span>
+            </a>
+        </li>
+        <li class="nav-item {{ request()->is('admin/users*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.users.index') }}">
+                <i class="fas fa-users-cog"></i>
+                <span>Manajemen User</span>
+            </a>
+        </li>
+    @endif
+
+    @php
+        $canAccessTentang = auth()->user()?->isSuperAdmin() || auth()->user()?->can('edit_tentang');
+    @endphp
+
+    @if($canAccessTentang)
+    <li class="nav-item {{ request()->routeIs('admin.tentang.*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.tentang.index') }}">
+            <i class="icon-paper menu-icon"></i>
+            <span class="menu-title">Tentang Kami</span>
+        </a>
+    </li>
+    @endif
+
+        @if(auth()->user()->isSuperAdmin() || auth()->user()->can('lihat_galeri'))
+    <li class="nav-item {{ request()->is('admin/galeri*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.galeri.index') }}">
+            <i class="fas fa-images"></i>
+            <span>Galeri</span>
+        </a>
+    </li>
+    @endif
+
+    @if(auth()->user()?->can('lihat_berita') || auth()->user()?->isSuperAdmin())
+<li class="nav-item">
+  <a class="nav-link" href="{{ route('admin.berita.index') }}">
+    <i class="fas fa-newspaper"></i>
+    <span>Berita</span>
+  </a>
+</li>
+@endif
+
+
+<!-- Kontak (Informasi Kontak) -->
+@if(auth()->user()?->isSuperAdmin() || auth()->user()?->can('lihat_kontak'))
+    <li class="nav-item {{ request()->is('admin/kontak') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.kontak.index') }}">
+            <i class="fas fa-address-card"></i>
+            <span>Informasi Kontak</span>
+        </a>
+    </li>
+@endif
+
+<!-- Pesan Kontak -->
+@if(auth()->user()?->isSuperAdmin() || auth()->user()?->can('lihat_pesan'))
+    <li class="nav-item {{ request()->is('admin/kontak-pesan*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.kontak-pesan.index') }}">
+            <i class="fas fa-envelope"></i>
+            <span>Pesan Kontak</span>
+        </a>
+    </li>
+@endif
+
+
+
+
+
+
+    <hr class="sidebar-divider">
+
+    <!-- Sidebar Toggler -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>
+
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto align-items-center">
+
+                        <ul class="navbar-nav ml-auto align-items-center">
+                            @auth
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle btn btn-light text-dark text-lg px-4 py-2 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:shadow-xl" 
+                                    href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ auth()->user()->name }}
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow-lg rounded-lg p-3 animated--grow-in" aria-labelledby="userDropdown">
+                                    <span class="dropdown-item-text text-lg font-semibold">
+                                        <strong>Role:</strong> 
+                                        @if(auth()->user()->isSuperAdmin()) 
+                                            Superadmin 
+                                        @else 
+                                            {{ auth()->user()->role->name ?? '-' }} 
+                                        @endif
+                                    </span>
+                                    <span class="dropdown-item-text text-lg">
+                                        <strong>Superadmin:</strong> {{ auth()->user()->isSuperAdmin() ? 'Ya' : 'Tidak' }}
+                                    </span>
+                                    <div class="dropdown-divider"></div>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item text-danger text-lg font-semibold px-4 py-2 rounded-lg transition-all duration-300 ease-in-out hover:bg-red-100">
+                                            <i class="fas fa-sign-out-alt fa-lg fa-fw mr-2 text-gray-500"></i> Logout
+                                        </button>
+                                    </form>
+                                </div>
+                            </li>
+                            @endauth
+                        </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <div class="container-fluid">
