@@ -57,62 +57,59 @@
         </li>
     @endif
 
-    @php
-        $canAccessTentang = auth()->user()?->isSuperAdmin() || auth()->user()?->can('edit_tentang');
-    @endphp
-
-    @if($canAccessTentang)
+    <!-- Tentang Kami -->
+    @if(auth()->user()?->canAkses('akses_tentang'))
     <li class="nav-item {{ request()->routeIs('admin.tentang.*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.tentang.index') }}">
-            <i class="icon-paper menu-icon"></i>
-            <span class="menu-title">Tentang Kami</span>
+            <i class="fas fa-info-circle"></i>
+            <span>Tentang Kami</span>
         </a>
     </li>
     @endif
 
-        @if(auth()->user()->isSuperAdmin() || auth()->user()->can('lihat_galeri'))
-    <li class="nav-item {{ request()->is('admin/galeri*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.galeri.index') }}">
-            <i class="fas fa-images"></i>
-            <span>Galeri</span>
-        </a>
-    </li>
+
+    <!-- Galeri -->
+    @if(auth()->user()?->canAkses('akses_galeri'))
+        <li class="nav-item {{ request()->is('admin/galeri*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.galeri.index') }}">
+                <i class="fas fa-images"></i>
+                <span>Galeri</span>
+            </a>
+        </li>
     @endif
 
-    @if(auth()->user()?->can('lihat_berita') || auth()->user()?->isSuperAdmin())
-<li class="nav-item">
-  <a class="nav-link" href="{{ route('admin.berita.index') }}">
-    <i class="fas fa-newspaper"></i>
-    <span>Berita</span>
-  </a>
-</li>
-@endif
+    <!-- Berita -->
+    @if(auth()->user()?->canAkses('akses_berita'))
+        <li class="nav-item {{ request()->is('admin/berita*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.berita.index') }}">
+                <i class="fas fa-newspaper"></i>
+                <span>Berita</span>
+            </a>
+        </li>
+    @endif
 
+    <!-- Informasi Kontak -->
+    @if(auth()->user()?->canAkses('akses_kontak'))
+        <li class="nav-item {{ request()->is('admin/kontak') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.kontak.index') }}">
+                <i class="fas fa-address-card"></i>
+                <span>Informasi Kontak</span>
+            </a>
+        </li>
+    @endif
 
-<!-- Kontak (Informasi Kontak) -->
-@if(auth()->user()?->isSuperAdmin() || auth()->user()?->can('lihat_kontak'))
-    <li class="nav-item {{ request()->is('admin/kontak') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.kontak.index') }}">
-            <i class="fas fa-address-card"></i>
-            <span>Informasi Kontak</span>
-        </a>
-    </li>
-@endif
+    <!-- Pesan Kontak -->
+    @if(auth()->user()?->canAkses('akses_pesan'))
 
-<!-- Pesan Kontak -->
-@if(auth()->user()?->isSuperAdmin() || auth()->user()?->can('lihat_pesan'))
-    <li class="nav-item {{ request()->is('admin/kontak-pesan*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('admin.kontak-pesan.index') }}">
-            <i class="fas fa-envelope"></i>
-            <span>Pesan Kontak</span>
-        </a>
-    </li>
-@endif
+        <li class="nav-item {{ request()->is('admin/kontak-pesan*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.kontak-pesan.index') }}">
+                <i class="fas fa-envelope"></i>
+                <span>Pesan Kontak</span>
+            </a>
+        </li>
+    @endif
 
-
-
-
-
+    
 
     <hr class="sidebar-divider">
 
@@ -121,6 +118,7 @@
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
 </ul>
+
 
         <!-- End of Sidebar -->
 

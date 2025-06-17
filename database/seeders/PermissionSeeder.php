@@ -4,27 +4,22 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class PermissionSeeder extends Seeder
 {
     public function run()
     {
+        // Hapus semua relasi permission dengan role
+
+        // Hapus semua permission
+        // Buat permission baru (per menu)
         $permissions = [
-            // Berita
-            'lihat_berita', 'tambah_berita', 'edit_berita', 'hapus_berita',
-
-            // Galeri
-            'lihat_galeri', 'tambah_galeri', 'edit_galeri', 'hapus_galeri',
-
-            // Kontak
-            'lihat_kontak', 'edit_kontak',
-
-            // Pesan
-            'lihat_pesan', 'hapus_pesan',
-
-            // Tentang
-            'lihat_tentang', // ⬅️ Tambahkan ini
-            'edit_tentang',
+            'akses_berita',
+            'akses_galeri',
+            'akses_kontak',
+            'akses_pesan',
+            'akses_tentang',
         ];
 
         foreach ($permissions as $name) {

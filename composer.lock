@@ -7408,7 +7408,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "a5c75038693ad2e8d4b6c15ba2403532647830c4"
+                "reference": "a5c75038693ad2e8d4b6c15ba2532647830c4"
             },
             "dist": {
                 "type": "zip",

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class contactMessage extends Model
+class ContactMessage extends Model
 {
     protected $fillable = [
         'subject',

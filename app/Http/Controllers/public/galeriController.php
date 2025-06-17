@@ -1,10 +1,11 @@
 <?php
+namespace App\Http\Controllers\Public;
 
-namespace App\Http\Controllers;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class galeriController extends Controller
+class GaleriController extends Controller
 {
     //
 }

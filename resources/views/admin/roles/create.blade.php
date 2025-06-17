@@ -35,37 +35,45 @@
                         </div>
 
                         <!-- Permissions -->
-                        <div class="mb-4">
-                            <label class="form-label fw-semibold mb-3">Izin Akses (Permissions)</label>
-                            @if($permissions->isEmpty())
-                                <div class="alert alert-info p-3 rounded-2">
-                                    Belum ada data permission tersedia.
+                        <!-- Permissions -->
+<div class="mb-4">
+    <label class="form-label fw-semibold mb-3">Izin Akses (Permissions)</label>
+
+    @if($groupedPermissions->flatten()->isEmpty())
+        <div class="alert alert-info p-3 rounded-2">
+            Belum ada data permission tersedia.
+        </div>
+    @else
+        <div class="row g-3">
+            @foreach ($groupedPermissions as $fitur => $permissions)
+                <div class="mb-4">
+                    <h5 class="fw-bold text-capitalize">{{ $fitur }}</h5>
+                    <div class="row g-3">
+                        @foreach ($permissions as $permission)
+                            <div class="col-md-6 col-12">
+                                <div class="form-check p-2 border rounded bg-light">
+                                    <input type="checkbox"
+                                        name="permissions[]"
+                                        class="form-check-input"
+                                        id="perm-{{ $permission->id }}"
+                                        value="{{ $permission->id }}">
+                                    <label class="form-check-label" for="perm-{{ $permission->id }}">
+                                        {{ ucwords(str_replace('_', ' ', $permission->name)) }}
+                                    </label>
                                 </div>
-                            @else
-                                <div class="row g-3">
-                                    @foreach ($permissions as $permission)
-                                        @if (!Str::startsWith($permission->name, 'users.') && !Str::startsWith($permission->name, 'roles.'))
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-check p-3 border rounded-2 hover-shadow bg-light">
-                                                    <input type="checkbox"
-                                                        name="permissions[]"
-                                                        class="form-check-input"
-                                                        id="perm-{{ $permission->id }}"
-                                                        value="{{ $permission->id }}"
-                                                        {{ in_array($permission->id, $rolePermissions ?? []) ? 'checked' : '' }}>
-                                                    <label class="form-check-label fw-medium" for="perm-{{ $permission->id }}">
-                                                        {{ ucwords(str_replace('_', ' ', $permission->name)) }}
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            @endif
-                            @error('permissions')
-                                <div class="text-danger small mt-2">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+
+    @error('permissions')
+        <div class="text-danger small mt-2">{{ $message }}</div>
+    @enderror
+</div>
+
 
                         <!-- Tombol -->
                         <div class="d-flex justify-content-between mt-4">

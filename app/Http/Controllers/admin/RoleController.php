@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 use App\Models\Permission;
 
 use App\Http\Controllers\Controller;
@@ -15,7 +15,10 @@ class RoleController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    
+    {       
+        
+
         $roles = Role::all();
         return view('admin.roles.index',compact('roles'));
     }
@@ -24,10 +27,11 @@ class RoleController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {    
-        $permissions = Permission::all();
-        return view('admin.roles.create',compact('permissions'));
-    }
+{
+    $permissions = Permission::all();
+    return view('admin.roles.create', compact('permissions'));
+}
+
 
     /**
      * Store a newly created resource in storage.
@@ -58,15 +62,17 @@ class RoleController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Role $role)
-    {
-        if ($role->name === 'superadmin') {
-            return redirect()->route('admin.roles.index')->with('error', 'Role superadmin tidak bisa diedit atau dihapus.');
-        }
-
-        $permissions = Permission::all();
-        $rolePermissions = $role->permissions->pluck('id')->toArray();
-        return view('admin.roles.edit', compact('role', 'permissions', 'rolePermissions'));
+{
+    if ($role->name === 'superadmin') {
+        return redirect()->route('admin.roles.index')->with('error', 'Role superadmin tidak bisa diedit atau dihapus.');
     }
+
+    $permissions = Permission::all();
+    $rolePermissions = $role->permissions->pluck('id')->toArray();
+
+    return view('admin.roles.edit', compact('role', 'permissions', 'rolePermissions'));
+}
+
 
     /**
      * Update the specified resource in storage.

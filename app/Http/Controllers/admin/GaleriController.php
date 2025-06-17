@@ -11,17 +11,32 @@ class GaleriController extends Controller
 {
     public function index()
     {
+        $user = auth()->user();
+        if (!$user || !$user->canAkses('akses_galeri')) {
+            abort(403);
+        }
+
         $galeri = Galeri::latest()->get();
         return view('admin.galeri.index', compact('galeri'));
     }
 
     public function create()
     {
+        $user = auth()->user();
+        if (!$user || !$user->canAkses('akses_galeri')) {
+            abort(403);
+        }
+
         return view('admin.galeri.create');
     }
 
     public function store(Request $request)
     {
+        $user = auth()->user();
+        if (!$user || !$user->canAkses('akses_galeri')) {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
@@ -39,18 +54,27 @@ class GaleriController extends Controller
 
     public function edit(Galeri $galeri)
     {
+        $user = auth()->user();
+        if (!$user || !$user->canAkses('akses_galeri')) {
+            abort(403);
+        }
+
         return view('admin.galeri.edit', compact('galeri'));
     }
 
     public function update(Request $request, Galeri $galeri)
     {
+        $user = auth()->user();
+        if (!$user || !$user->canAkses('akses_galeri')) {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         if ($request->hasFile('gambar')) {
-            // Hapus gambar lama
             if ($galeri->gambar && Storage::disk('public')->exists($galeri->gambar)) {
                 Storage::disk('public')->delete($galeri->gambar);
             }
@@ -64,6 +88,11 @@ class GaleriController extends Controller
 
     public function destroy(Galeri $galeri)
     {
+        $user = auth()->user();
+        if (!$user || !$user->canAkses('akses_galeri')) {
+            abort(403);
+        }
+
         if ($galeri->gambar && Storage::disk('public')->exists($galeri->gambar)) {
             Storage::disk('public')->delete($galeri->gambar);
         }

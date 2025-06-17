@@ -19,18 +19,25 @@
         </div>
 
         <h4>Permission:</h4>
-        @foreach ($permissions as $permission)
-            @if (!Str::startsWith($permission->name, 'users.') && !Str::startsWith($permission->name, 'roles.'))
-                <div class="form-check">
-                    <input type="checkbox" name="permissions[]" class="form-check-input"
-                        value="{{ $permission->id }}"
-                        {{ in_array($permission->id, $rolePermissions ?? []) ? 'checked' : '' }}>
-                    <label class="form-check-label">
-                        {{ ucwords(str_replace('_', ' ', $permission->name)) }}
-                    </label>
-                </div>
-            @endif
-        @endforeach
+            <div class="row g-3">
+    @foreach ($permissions as $permission)
+        <div class="col-md-6 col-12">
+            <div class="form-check p-2 border rounded bg-light">
+                <input type="checkbox"
+                    name="permissions[]"
+                    class="form-check-input"
+                    id="perm-{{ $permission->id }}"
+                    value="{{ $permission->id }}"
+                    {{ in_array($permission->id, $rolePermissions ?? []) ? 'checked' : '' }}>
+                <label class="form-check-label" for="perm-{{ $permission->id }}">
+                    {{ ucwords(str_replace('_', ' ', $permission->name)) }}
+                </label>
+            </div>
+        </div>
+    @endforeach
+</div>
+
+
 
 
         <button type="submit" class="btn btn-primary"> update</button>
