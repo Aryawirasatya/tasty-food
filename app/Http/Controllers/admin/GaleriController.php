@@ -15,7 +15,7 @@ class GaleriController extends Controller
         if (!$user || !$user->canAkses('akses_galeri')) {
             abort(403);
         }
-
+        
         $galeri = Galeri::latest()->get();
         return view('admin.galeri.index', compact('galeri'));
     }
@@ -43,11 +43,13 @@ class GaleriController extends Controller
         ]);
 
         $path = $request->file('gambar')->store('galeri', 'public');
-
+        
         Galeri::create([
             'judul' => $validated['judul'],
             'gambar' => $path,
+            'is_slider' => $request->has('is_slider'), // <-- tambah ini
         ]);
+                
 
         return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil ditambahkan.');
     }
@@ -80,6 +82,7 @@ class GaleriController extends Controller
             }
             $validated['gambar'] = $request->file('gambar')->store('galeri', 'public');
         }
+        $validated['is_slider'] = $request->has('is_slider');
 
         $galeri->update($validated);
 

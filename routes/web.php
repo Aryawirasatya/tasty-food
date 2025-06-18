@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\GaleriController as PublicGaleriController;
+use App\Http\Controllers\Public\TentangController as PublicTentangController;
 use App\Http\Controllers\Public\KontakController;
+use App\Http\Controllers\Public\BeritaController as PublicBeritaController;
 use App\Http\Controllers\Admin\{
     DashboardController,
     TentangController,
@@ -18,10 +21,24 @@ use App\Http\Controllers\Admin\{
 // ===================
 // PUBLIC ROUTES
 // ===================
+
+// Beranda
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Tentang Kami
+Route::get('/tentang', [PublicTentangController::class, 'index'])->name('public.tentang');
+
+// Galeri
+Route::get('/galeri', [PublicGaleriController::class, 'index'])->name('public.galeri');
+
+// Kontak
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
 Route::post('/kontak', [KontakController::class, 'kirimPesan'])->name('kontak.kirim');
-Route::delete('/kontak-pesan/{kontak_pesan}', [KontakController::class, 'destroy'])->name('kontak-pesan.destroy');
+
+// Berita
+Route::get('/berita', [PublicBeritaController::class, 'index'])->name('berita.index');
+Route::get('/berita/{id}', [PublicBeritaController::class, 'show'])->name('berita.show');
+
 
 // ===================
 // ADMIN ROUTES
@@ -38,11 +55,10 @@ Route::middleware(['auth', 'IsAdmin'])->prefix('admin')->name('admin.')->group(f
 
     // Galeri
     Route::resource('galeri', GaleriController::class);
+    
+Route::resource('berita', BeritaController::class);
 
-    // Berita
-    Route::resource('berita', BeritaController::class)->parameters([
-        'berita' => 'berita'
-    ]);
+
 
     // Informasi Kontak
     Route::prefix('kontak')->name('kontak.')->group(function () {
@@ -58,7 +74,7 @@ Route::middleware(['auth', 'IsAdmin'])->prefix('admin')->name('admin.')->group(f
     Route::view('/test-form', 'test');
     Route::post('/debug-test', fn () => dd('Form berhasil terkirim'));
 
-    // Manajemen User & Role (Superadmin Only)
+    // User & Role (Hanya Superadmin)
     Route::middleware('IsSuperAdmin')->group(function () {
         Route::resource('roles', RoleController::class);
         Route::resource('users', UserController::class);

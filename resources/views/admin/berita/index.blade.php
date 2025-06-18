@@ -5,60 +5,68 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3">Daftar Berita</h1>
-        <a href="{{ route('admin.berita.create') }}" class="btn btn-primary">Tambah Berita</a>
+        <a href="{{ route('admin.berita.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Tambah Berita
+        </a>
     </div>
 
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
 
     @if($berita->count())
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Judul</th>
-                    <th>Thumbnail</th>
-                    <th>Utama</th>
-                    <th>Dibuat</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($berita as $item)
-                <tr>
-                    <td>{{ $item->judul }}</td>
-                    <td>
-                        @if($item->gambar)
-                            <img src="{{ asset('storage/' . $item->gambar) }}" width="100">
-                        @else
-                            <span class="text-muted">Tidak ada</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($item->utama)
-                            <span class="badge bg-success">YA</span>
-                        @else
-                            <span class="badge bg-secondary">TIDAK</span>
-                        @endif
-                    </td>
-                    <td>{{ $item->created_at->format('d-m-Y') }}</td>
-                    <td>
-                        <a href="{{ route('admin.berita.show', $item->id) }}" class="btn btn-info btn-sm">Lihat</a>
-                        <a href="{{ route('admin.berita.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.berita.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?')">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-sm">Hapus</button>
-                        </form>
-
-                    </td>
-
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 50px;">No</th>
+                        <th>Judul</th>
+                        <th>Konten</th>
+                        <th style="width: 120px;">Gambar</th>
+                        <th style="width: 120px;">Tanggal</th>
+                        <th style="width: 180px;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($berita as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->judul }}</td>
+                            <td>{{ Str::limit(strip_tags($item->konten), 60) }}</td>
+                            <td>
+                                @if ($item->gambar)
+                                    <img src="{{ asset('storage/' . $item->gambar) }}" alt="gambar" width="100">
+                                @else
+                                    <span class="text-muted">Tidak ada</span>
+                                @endif
+                            </td>
+                            <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                            <td>
+                                {{-- GUNAKAN ID UNTUK ADMIN --}}
+                                <a href="{{ route('admin.berita.show', $item->id) }}" class="btn btn-info btn-sm mb-1">
+                                    <i class="fas fa-eye"></i> Lihat
+                                </a>
+                                <a href="{{ route('admin.berita.edit', $item->id) }}" class="btn btn-warning btn-sm mb-1">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <form action="{{ route('admin.berita.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus berita ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     @else
-        <div class="alert alert-info">Belum ada berita.</div>
+        <div class="alert alert-info text-center">Belum ada data berita yang tersedia.</div>
     @endif
 </div>
 @endsection

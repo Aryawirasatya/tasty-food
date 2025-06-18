@@ -18,6 +18,17 @@
                 <img src="{{ asset('storage/' . $galeri->gambar) }}" width="120" class="mt-2">
             @endif
         </div>
+        <div class="mt-4">
+    <label class="inline-flex items-center">
+        <input type="hidden" name="is_slider" value="0"> {{-- WAJIB --}}
+        <input type="checkbox" name="is_slider" value="1"
+            class="form-checkbox"
+            {{ old('is_slider', $galeri->is_slider ?? false) ? 'checked' : '' }}>
+        <span class="ml-2">Tampilkan di slider</span>
+    </label>
+</div>
+
+
 
         <button class="btn btn-primary">Update</button>
     </form>

@@ -1,51 +1,49 @@
 @extends('admin.layouts.app')
-@section('title', 'Edit Berita')
 
 @section('content')
-<div class="container">
-    <h1 class="mb-4">Edit Berita</h1>
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-2xl font-bold mb-6">Edit Berita</h1>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form action="{{ route('admin.berita.update', $berita->id) }}" method="POST" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.berita.update', $berita->id) }}" enctype="multipart/form-data" class="bg-white p-6 rounded shadow-md">
         @csrf
         @method('PUT')
 
-        <div class="mb-3">
-            <label for="judul" class="form-label">Judul</label>
-            <input type="text" name="judul" class="form-control" value="{{ old('judul', $berita->judul) }}" required>
+        {{-- Judul --}}
+        <div class="mb-4">
+            <label for="judul" class="block text-gray-700 font-semibold mb-2">Judul</label>
+            <input type="text" name="judul" id="judul" value="{{ old('judul', $berita->judul) }}" class="w-full border border-gray-300 p-2 rounded">
+            @error('judul')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="konten" class="form-label">Konten</label>
-            <textarea name="konten" class="form-control" rows="6" required>{{ old('konten', $berita->konten) }}</textarea>
+        {{-- Konten --}}
+        <div class="mb-4">
+            <label for="konten" class="block text-gray-700 font-semibold mb-2">Konten</label>
+            <textarea name="konten" id="konten" rows="6" class="w-full border border-gray-300 p-2 rounded">{{ old('konten', $berita->konten) }}</textarea>
+            @error('konten')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="mb-3">
-            <label for="gambar" class="form-label">Gambar (Kosongkan jika tidak ingin diubah)</label>
+        {{-- Gambar --}}
+        <div class="mb-4">
+            <label for="gambar" class="block text-gray-700 font-semibold mb-2">Gambar (opsional)</label>
+            <input type="file" name="gambar" id="gambar" class="w-full border border-gray-300 p-2 rounded">
             @if ($berita->gambar)
-                <div class="mb-2">
-                    <img src="{{ asset('storage/' . $berita->gambar) }}" width="200" alt="Gambar lama">
-                </div>
+                <p class="text-sm mt-2">Gambar Saat Ini:</p>
+                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita" class="h-32 mt-1">
             @endif
-            <input type="file" name="gambar" class="form-control">
+            @error('gambar')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" name="utama" id="utama" {{ old('utama', $berita->utama) ? 'checked' : '' }}>
-            <label class="form-check-label" for="utama">Tandai sebagai berita utama</label>
+        {{-- Tombol Submit --}}
+        <div class="flex justify-end">
+            <a href="{{ route('admin.berita.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded mr-2">Batal</a>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Update</button>
         </div>
-
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('admin.berita.index') }}" class="btn btn-secondary">Batal</a>
     </form>
 </div>
 @endsection

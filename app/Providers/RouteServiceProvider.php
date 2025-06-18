@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use App\Models\Berita;
+
 
 class RouteServiceProvider extends ServiceProvider
 {   
@@ -20,6 +22,12 @@ class RouteServiceProvider extends ServiceProvider
             ->prefix('api')
             ->group(base_path('routes/api.php'));
 
+
+         Route::bind('berita', function ($value) {
+        return request()->is('berita/*')
+            ? \App\Models\Berita::where('slug', $value)->firstOrFail()
+            : \App\Models\Berita::findOrFail($value);
+    });
         // Route untuk admin
     }
 }

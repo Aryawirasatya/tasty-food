@@ -41,6 +41,13 @@
                     <img src="{{ asset('storage/' . $tentang->gambar_profil) }}" width="100" class="mt-2">
                 @endif
             </div>
+            <div class="mb-3">
+                <label class="form-label">Gambar Profil Kedua</label>
+                <input type="file" name="gambar_profil_2" class="form-control">
+                @if (!empty($tentang->gambar_profil_2))
+                    <img src="{{ asset('storage/' . $tentang->gambar_profil_2) }}" width="100" class="mt-2">
+                @endif
+            </div>
 
             <div class="mb-3">
                 <label class="form-label">Judul Visi</label>
@@ -69,6 +76,24 @@
                     <img src="{{ asset('storage/' . $tentang->gambar_visimisi) }}" width="100" class="mt-2">
                 @endif
             </div>
+
+            {{-- Tambahan untuk gambar visi&misi kedua --}}
+<div class="mb-3">
+    <label class="form-label">Gambar Visi Misi Kedua</label>
+    <input type="file" name="gambar_visimisi_2" class="form-control">
+    @if (!empty($tentang->gambar_visimisi_2))
+        <img src="{{ asset('storage/' . $tentang->gambar_visimisi_2) }}" width="100" class="mt-2">
+    @endif
+</div>
+
+<div class="mb-3">
+    <label for="gambar_misi_1" class="form-label">Gambar Misi 1</label>
+    <input type="file" name="gambar_misi_1" class="form-control">
+    @if ($tentang->gambar_misi_1)
+        <img src="{{ asset('storage/' . $tentang->gambar_misi_1) }}" class="img-thumbnail mt-2" width="150">
+    @endif
+</div>
+
 
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
