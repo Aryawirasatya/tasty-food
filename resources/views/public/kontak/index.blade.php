@@ -5,7 +5,10 @@
 <!-- Hero Section -->
 <section class="bg-cover bg-center h-96" style="background-image: url('{{ asset('assets/group 70@2x.png') }}');">
     <div class="bg-black bg-opacity-50 w-full h-full flex items-center justify-Start px-10">
-        <h1 class="text-white text-5xl font-bold">KONTAK KAMI</h1>
+        <div class="w-full text-center md:text-left">
+
+            <h1 class="text-white text-5xl font-bold">KONTAK KAMI</h1>
+        </div>
     </div>
 </section>
 
@@ -118,12 +121,13 @@
         <div class="rounded-xl overflow-hidden shadow-lg">
             <div class="relative pb-[56.25%] h-0">
                 <iframe 
-                    src="{{ e($kontak->link_maps) }}" 
+                    src="{{ $kontak->link_maps }}" 
                     class="absolute top-0 left-0 w-full h-full border-0"
                     allowfullscreen 
                     loading="lazy" 
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
+
             </div>
         </div>
     </div>

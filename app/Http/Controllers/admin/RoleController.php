@@ -29,7 +29,10 @@ class RoleController extends Controller
     public function create()
 {
     $permissions = Permission::all();
-    return view('admin.roles.create', compact('permissions'));
+    $groupedPermissions = $permissions->groupBy(function ($permission) {
+        return explode('_', $permission->name)[1] ?? 'lainnya';
+    });
+    return view('admin.roles.create', compact('groupedPermissions'));
 }
 
 

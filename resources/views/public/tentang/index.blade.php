@@ -2,10 +2,13 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="relative bg-cover bg-center h-[400px] flex items-center justify-start text-white px-10"
-    style="background-image: url('{{ asset('assets/group 70@2x.png') }}');">
-        <h1 class="text-4xl font-bold z-10">TENTANG KAMI</h1>
+<section class="relative bg-cover bg-center h-[400px] flex items-center text-white px-10"
+style="background-image: url('{{ asset('assets/group 70@2x.png') }}');">
+    <div class="w-full text-center md:text-left">
+        <h1 class="text-4xl font-bold z-10 px-6">TENTANG KAMI</h1>
+    </div>
 </section>
+
 
 
     <!-- Profil Section -->
@@ -13,19 +16,22 @@
         <div class="grid md:grid-cols-2 gap-8 items-center">
             <div>
                 <h2 class="text-2xl font-semibold mb-4">{{ $tentang->judul }}</h2>
-                <p class="mb-4">{!! nl2br(e($tentang->deskripsi)) !!}</p>
+                <p class="mb-4 font-bold">{!! nl2br(e($tentang->deskripsi)) !!}</p>
                 <p>{!! nl2br(e($tentang->deskripsi_lanjutan)) !!}</p>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 @if ($tentang->gambar_profil)
-                    <img src="{{ asset('storage/' . $tentang->gambar_profil) }}" class="rounded-lg shadow-md"
-                        alt="Gambar Profil">
+                    <img src="{{ asset('storage/' . $tentang->gambar_profil) }}"
+    class="rounded-lg shadow-md w-full h-80 object-cover"
+    alt="Gambar Profil">
                 @endif
                 @if ($tentang->gambar_profil_2)
-                    <img src="{{ asset('storage/' . $tentang->gambar_profil_2) }}" class="rounded-lg shadow-md"
-                        alt="Gambar Profil 2">
+                   <img src="{{ asset('storage/' . $tentang->gambar_profil_2) }}"
+    class="rounded-lg shadow-md w-full h-80 object-cover"
+    alt="Gambar Profil 2">
                 @endif
             </div>
+
         </div>
     </section>
 
@@ -58,7 +64,8 @@
             </div>
             <div>
                 @if ($tentang->gambar_misi_1)
-                    <img src="{{ asset('storage/' . $tentang->gambar_misi_1) }}" class="rounded-lg shadow-md"
+                    <img src="{{ asset('storage/' . $tentang->gambar_misi_1) }}"
+                        class="rounded-lg shadow-md w-full h-60 object-cover"
                         alt="Gambar Misi">
                 @endif
             </div>

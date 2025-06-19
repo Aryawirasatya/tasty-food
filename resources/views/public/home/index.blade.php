@@ -10,7 +10,7 @@
     <div class="absolute top-0 right-0 z-0 hidden md:block">
         <img src="{{ asset('assets/img-4-2000x2000.png') }}"
              alt="Healthy Tasty Food"
-             class="max-w-[550px] lg:max-w-[670px] w-full h-auto object-cover rounded-full translate-x-[20%] -translate-y-[20%] drop-shadow-lg">
+             class="max-w-[550px] lg:max-w-[750px] w-full h-auto object-cover rounded-full translate-x-[20%] -translate-y-[20%] drop-shadow-lg">
     </div>
 
     <div class="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-8 md:px-10  pl-8 md:pl-16">

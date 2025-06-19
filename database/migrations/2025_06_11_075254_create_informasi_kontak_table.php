@@ -16,7 +16,7 @@ return new class extends Migration
         $table->string('alamat');
         $table->string('email');
         $table->string('telepon');
-        $table->string('link_maps')->nullable(); // iframe/link ke Google Maps
+        $table->string('link_maps')->nullable();
         $table->string('url_email')->nullable(); // mailto: atau link tujuan email
         $table->string('url_telepon')->nullable(); // tel: atau WA link
         $table->string('url_alamat')->nullable(); // link ke lokasi

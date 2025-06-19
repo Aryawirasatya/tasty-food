@@ -6,85 +6,85 @@
 @section('content')
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <!-- Card utama -->
-            <div class="card shadow-sm border-0 rounded-3">
+        <div class="col-lg-10">
+            <!-- Kartu Utama -->
+            <div class="card shadow-sm border-0 rounded-lg">
                 <!-- Header -->
-                <div class="card-header bg-gradient-primary text-white border-0 d-flex justify-content-between align-items-center rounded-top-3 p-4">
-                    <h4 class="mb-0 fw-semibold">Tambah Role Baru</h4>
-  
+                <div class="card-header bg-primary text-white border-0 rounded-t-lg px-3 py-2">
+                    <h5 class="mb-0 font-semibold">Tambah Role Baru</h5>
                 </div>
-                <!-- Body -->
-                <div class="card-body p-4">
-                    <form action="{{ route('admin.roles.store') }}" method="POST" class="">
 
-
+                <!-- Body Form -->
+                <div class="card-body px-3 py-3">
+                    <form action="{{ route('admin.roles.store') }}" method="POST">
                         @csrf
 
                         <!-- Nama Role -->
-                        <div class="mb-4">
-                            <label for="name" class="form-label fw-semibold mb-2">Nama Role <span class="text-danger">*</span></label>
-                            <input type="text" 
-                                name="name" 
-                                id="name" 
-                                class="form-control form-control-lg rounded-2 @error('name') is-invalid @enderror" 
-                                placeholder="Contoh: admin_galeri" required>
+                        <div class="mb-3">
+                            <label for="name" class="form-label font-semibold">Nama Role <span class="text-danger">*</span></label>
+                            <input type="text"
+                                   name="name"
+                                   id="name"
+                                   class="form-control form-control-lg rounded-3 @error('name') is-invalid @enderror"
+                                   placeholder="Contoh: admin_galeri"
+                                   required>
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <!-- Permissions -->
-                        <!-- Permissions -->
-<div class="mb-4">
-    <label class="form-label fw-semibold mb-3">Izin Akses (Permissions)</label>
+                        <div class="mb-3">
+                            <label class="form-label font-semibold">Izin Akses (Permissions)</label>
 
-    @if($groupedPermissions->flatten()->isEmpty())
-        <div class="alert alert-info p-3 rounded-2">
-            Belum ada data permission tersedia.
-        </div>
-    @else
-        <div class="row g-3">
-            @foreach ($groupedPermissions as $fitur => $permissions)
-                <div class="mb-4">
-                    <h5 class="fw-bold text-capitalize">{{ $fitur }}</h5>
-                    <div class="row g-3">
-                        @foreach ($permissions as $permission)
-                            <div class="col-md-6 col-12">
-                                <div class="form-check p-2 border rounded bg-light">
-                                    <input type="checkbox"
-                                        name="permissions[]"
-                                        class="form-check-input"
-                                        id="perm-{{ $permission->id }}"
-                                        value="{{ $permission->id }}">
-                                    <label class="form-check-label" for="perm-{{ $permission->id }}">
-                                        {{ ucwords(str_replace('_', ' ', $permission->name)) }}
-                                    </label>
+                            @if ($groupedPermissions->flatten()->isEmpty())
+                                <div class="alert alert-info rounded mt-1">
+                                    Belum ada data permission tersedia.
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    @endif
+                            @else
+                                @foreach ($groupedPermissions as $fitur => $permissions)
+                                    <div class="mb-3 p-2 border rounded bg-light">
+                                        <h6 class="font-bold text-capitalize mb-2 border-b pb-1">
+                                            {{ str_replace('_', ' ', $fitur) }}
+                                        </h6>
+                                        <div class="row g-2">
+                                            @foreach ($permissions as $permission)
+                                                <div class="col-md-6 col-12">
+                                                    <label class="flex items-center gap-2 p-2 border rounded cursor-pointer transition hover:bg-indigo-50">
+                                                        <input type="checkbox"
+                                                               name="permissions[]"
+                                                               id="perm-{{ $permission->id }}"
+                                                               value="{{ $permission->id }}"
+                                                               class="accent-indigo-600 h-4 w-4 shrink-0 rounded focus:ring-2 focus:ring-indigo-500">
+                                                        <span class="text-sm font-medium text-gray-800">
+                                                            {{ ucwords(str_replace('_', ' ', $permission->name)) }}
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
 
-    @error('permissions')
-        <div class="text-danger small mt-2">{{ $message }}</div>
-    @enderror
-</div>
+                            @error('permissions')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
 
-
-                        <!-- Tombol -->
-                        <div class="d-flex justify-content-between mt-4">
-                            <button type="submit" class="btn btn-primary px-4 py-2 fs-5 rounded-3 shadow-lg">
-                                Simpan Role
+                        <!-- Tombol Aksi -->
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('admin.roles.index') }}" class="btn btn-outline-secondary px-3 py-2 rounded">
+                                <i class="bi bi-arrow-left me-1"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-primary px-3 py-2 rounded shadow">
+                                <i class="bi bi-save me-1"></i> Simpan Role
                             </button>
-                            <a href="{{ route('admin.roles.index') }}" class="btn btn-light btn-sm fw-medium ">Kembali</a>
                         </div>
                     </form>
                 </div>
             </div>
+            <!-- End Kartu Utama -->
         </div>
     </div>
 </div>

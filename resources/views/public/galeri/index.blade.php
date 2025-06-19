@@ -9,7 +9,9 @@
              class="object-cover w-full h-full transform scale-[1.1]" alt="Hero Galeri">
         <div class="absolute inset-0 bg-black bg-opacity-40"></div>
         <div class="absolute top-1/2 left-6 sm:left-10 transform -translate-y-1/2 text-white z-10">
+        <div class="w-full text-center md:text-left">
             <h1 class="text-3xl sm:text-5xl font-extrabold">GALERI KAMI</h1>
+        </div>
         </div>
     </div>
 

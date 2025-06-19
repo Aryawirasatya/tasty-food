@@ -55,7 +55,9 @@
 {{-- Berita Lainnya --}}
 <section class="py-12 bg-white">
     <div class="max-w-6xl mx-auto px-4">
-        <h3 class="text-2xl font-bold text-gray-800 mb-8">BERITA LAINNYA</h3>
+        <div class="w-full text-center md:text-left">
+            <h3 class="text-2xl font-bold text-gray-800 mb-8">BERITA LAINNYA</h3>
+    </div>
 
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             @if(isset($others))
