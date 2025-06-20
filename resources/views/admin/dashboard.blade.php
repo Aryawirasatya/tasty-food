@@ -1,7 +1,21 @@
-@include('admin.layouts.header')
+@extends('admin.layouts.app')
 
-@section('title', 'Dashboard')
-
-<h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Alias odit autem dolorum veritatis laudantium illum reiciendis iure, vero recusandae quas, nobis excepturi. Inventore assumenda tempora modi suscipit natus id quo!</h1>
-
-@include('admin.layouts.footer')
+@section('content')
+<div style="padding: 2rem;">
+  <h2>Dashboard</h2>
+  <div style="display: flex; gap: 2rem; margin-bottom: 2rem;">
+    <div style="flex:1; background: #f0f4ff; padding: 1rem; border-radius: 8px;">
+      <h4>Total Berita</h4>
+      <p style="font-size: 2rem;">{{ $totalBerita }}</p>
+    </div>
+    <div style="flex:1; background: #e9fcef; padding: 1rem; border-radius: 8px;">
+      <h4>Total Galeri</h4>
+      <p style="font-size: 2rem;">{{ $totalGaleri }}</p>
+    </div>
+    <div style="flex:1; background: #ffecec; padding: 1rem; border-radius: 8px;">
+      <h4>Total Pesan</h4>
+      <p style="font-size: 2rem;">{{ $totalPesan }}</p>
+    </div>
+  </div>
+</div>  
+@endsection

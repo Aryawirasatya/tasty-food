@@ -19,6 +19,7 @@
     "vite-plugin-full-reload": "^1.2.0"
   },
   "dependencies": {
+    "chart.js": "^4.5.0",
     "datatables.net-bs5": "^2.3.2",
     "lodash": "^4.17.21",
     "swiper": "^11.2.8"
