@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Models\Berita;
 use App\Models\Galeri;
-use App\Models\Tentang; // asumsikan model Tentang ada
+use App\Models\Tentang; 
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,8 +25,7 @@ class HomeController extends Controller
         $features = Galeri::latest()->take(4)->get();
             
 
-        // 3. Berita Kami
-        // Ambil featured sebagai berita terbaru, sisanya ambil 4 berita berikutnya
+
         $featuredBerita = Berita::latest()->first();
         if ($featuredBerita) {
             $othersBerita = Berita::where('id', '!=', $featuredBerita->id)
