@@ -33,9 +33,17 @@
   </div>
 
   {{-- Mobile Menu (dropdown) --}}
-  <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-300"
-       x-transition:leave="transition ease-in duration-200"
-       class="md:hidden px-8 pb-4 bg-white text-black shadow-lg rounded-b-2xl">
+  <div
+       x-show="open"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 -translate-y-5"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 -translate-y-5"
+    class="md:hidden bg-white text-black shadow-lg rounded-b-xl px-6 py-6"
+       
+       >
     <ul class="flex flex-col space-y-4 text-sm font-medium uppercase">
       <li><a @click="open = false" href="{{ route('home') }}" class="hover:text-red-500">HOME</a></li>
       <li><a @click="open = false" href="{{ route('public.tentang') }}" class="hover:text-red-500">TENTANG</a></li>

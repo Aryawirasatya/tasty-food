@@ -5,7 +5,7 @@
 <!-- Hero Section -->
 <section class="bg-cover bg-center h-96" style="background-image: url('{{ asset('assets/group 70@2x.png') }}');">
     <div class="bg-black bg-opacity-50 w-full h-full flex items-center justify-Start px-10">
-        <div class="w-full text-center md:text-left">
+        <div class="w-full text-center md:text-left px-6">
 
             <h1 class="text-white text-5xl font-bold">KONTAK KAMI</h1>
         </div>
