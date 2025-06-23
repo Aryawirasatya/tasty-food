@@ -15,30 +15,42 @@
         </div>
     </div>
 
-    {{-- SECTION: SLIDER --}}
-    <div class="bg-white py-12 px-4 sm:px-8">
-        <div class="max-w-5xl mx-auto">
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    @foreach ($sliderImages as $image)
-                        <div class="swiper-slide">
-                            <img src="{{ asset('storage/' . $image->gambar) }}"
-                                 alt="Slider"
-                                 class="w-full h-[300px] object-cover rounded-xl">
-                        </div>
-                    @endforeach
-                </div>
+{{-- SECTION: SLIDER --}}
+<div class="bg-white py-12 px-4 sm:px-8">
+    <div class="max-w-5xl mx-auto relative">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                @foreach ($sliderImages as $image)
+                    <div class="swiper-slide">
+                        <img src="{{ asset('storage/' . $image->gambar) }}"
+                             alt="Slider"
+                             class="w-full h-[300px] object-cover rounded-xl">
+                    </div>
+                @endforeach
+            </div>
 
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
+            {{-- Tombol prev --}}
+            <div class="swiper-button-prev !text-white !bg-black/40 hover:!bg-black/70 
+                        w-14 h-14 rounded-full flex items-center justify-center absolute z-10 
+                        top-1/2 -translate-y-1/2 left-4 shadow-lg backdrop-blur-sm
+                        transition duration-300 ease-in-out">
+            </div>
+
+            {{-- Tombol next --}}
+            <div class="swiper-button-next !text-white !bg-black/40 hover:!bg-black/70 
+                        w-14 h-14 rounded-full flex items-center justify-center absolute z-10 
+                        top-1/2 -translate-y-1/2 right-4 shadow-lg backdrop-blur-sm
+                        transition duration-300 ease-in-out">
             </div>
         </div>
     </div>
+</div>
+
 
     {{-- SECTION: GRID --}}
     <section class="bg-gray-100 py-16 px-4 sm:px-8">
         <div class="max-w-5xl mx-auto">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-   cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @foreach ($galeris as $galeri)
                     <div class="overflow-hidden rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300">
                         <img src="{{ asset('storage/' . $galeri->gambar) }}" alt="{{ $galeri->judul }}"
