@@ -9,9 +9,10 @@
     <link rel="icon" href="{{ asset('assets/public/images/favicon.png') }}">
 
    {{-- Load hasil build dari Vite --}}
-<link rel="stylesheet" href="{{ asset('build/assets/app-B83Slgs4.css') }}">
-<link rel="stylesheet" href="{{ asset('build/assets/app-Cis5uVHU.css') }}">
-<script type="module" src="{{ asset('build/assets/app-kSXiIrfw.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('build/assets/app-B83Slgs4.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-Cis5uVHU.css') }}">
+    <script type="module" src="{{ asset('build/assets/app-kSXiIrfw.js') }}"></script>
+
 
 
     <style>
