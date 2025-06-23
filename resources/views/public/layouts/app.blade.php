@@ -10,7 +10,8 @@
 
     {{-- Tailwind CSS & JS via Vite --}}
    {{-- Load hasil build saja --}}
-    <script src="{{ asset('build/assets/app-kSXiIrfw.js') }}" defer></script>
+{{-- Tailwind CSS & JS via Vite --}}
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 
 
     <style>
