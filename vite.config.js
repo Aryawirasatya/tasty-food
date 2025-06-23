@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
+import { defineConfig } from 'vite'
+import laravel from 'laravel-vite-plugin'
 
 export default defineConfig({
     plugins: [
@@ -12,5 +12,5 @@ export default defineConfig({
         outDir: 'public/build',
         emptyOutDir: true,
     },
-    base: '/build/', 
-});
+    base: '/build/', // PENTING: pastikan ini sesuai
+})
