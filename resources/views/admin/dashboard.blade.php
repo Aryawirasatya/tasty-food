@@ -1,21 +1,36 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div style="padding: 2rem;">
-  <h2>Dashboard</h2>
-  <div style="display: flex; gap: 2rem; margin-bottom: 2rem;">
-    <div style="flex:1; background: #f0f4ff; padding: 1rem; border-radius: 8px;">
-      <h4>Total Berita</h4>
-      <p style="font-size: 2rem;">{{ $totalBerita }}</p>
+<div class="container py-4">
+  <h2 class="mb-4">Dashboard</h2>
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card text-white bg-primary h-100">
+        <div class="card-body">
+          <h5 class="card-title">Total Berita</h5>
+          <p class="card-text display-6">{{ $totalBerita }}</p>
+        </div>
+      </div>
     </div>
-    <div style="flex:1; background: #e9fcef; padding: 1rem; border-radius: 8px;">
-      <h4>Total Galeri</h4>
-      <p style="font-size: 2rem;">{{ $totalGaleri }}</p>
+
+    <div class="col-md-4">
+      <div class="card text-white bg-success h-100">
+        <div class="card-body">
+          <h5 class="card-title">Total Galeri</h5>
+          <p class="card-text display-6">{{ $totalGaleri }}</p>
+        </div>
+      </div>
     </div>
-    <div style="flex:1; background: #ffecec; padding: 1rem; border-radius: 8px;">
-      <h4>Total Pesan</h4>
-      <p style="font-size: 2rem;">{{ $totalPesan }}</p>
+
+    <div class="col-md-4">
+      <div class="card text-white bg-danger h-100">
+        <div class="card-body">
+          <h5 class="card-title">Total Pesan</h5>
+          <p class="card-text display-6">{{ $totalPesan }}</p>
+        </div>
+      </div>
     </div>
   </div>
-</div>  
+</div>
 @endsection

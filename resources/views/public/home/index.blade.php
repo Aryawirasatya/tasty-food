@@ -52,11 +52,11 @@
         <div class="absolute inset-0 bg-white/0"></div>
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-8">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-28 gap-x-10">
             @for($i = 1; $i <= 4; $i++)
                 <div class="relative bg-white rounded-2xl shadow-lg pt-20 pb-6 px-4 text-center hover:shadow-xl transition duration-300">
-                    <div class="absolute -top-16 left-1/2 transform -translate-x-1/2 w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36">
+                    <div class="absolute -top-24 left-1/2 transform -translate-x-1/2 w-40 h-40 sm:w-44 sm:h-44 lg:w-48 lg:h-48">
                         <img src="{{ asset('assets/img-1.png') }}" alt="Fitur {{ $i }}"
                              class="w-full h-full rounded-full object-cover">
                     </div>
