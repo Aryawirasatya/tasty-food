@@ -5,9 +5,19 @@
 
 @section('content')
 
+<style>
+@media (max-width: 1024px) {
+  .hide-under-1025 {
+    display: none !important;
+  }
+}
+</style>
+
+
 <!-- HERO SECTION -->
 <section class="relative bg-[#f9f9f9] min-h-screen flex flex-col justify-center -mt-[68px] pt-[68px] overflow-hidden">
-    <div class="absolute top-0 right-0 z-0 hidden md:block">
+    <div class="absolute top-0 right-0 z-0 hidden lg:block hide-under-1025">
+
         <img src="{{ asset('assets/img-4-2000x2000.png') }}"
              alt="Healthy Tasty Food"
              class="max-w-[550px] lg:max-w-[750px] w-full h-auto object-cover rounded-full translate-x-[20%] -translate-y-[20%] drop-shadow-lg">
@@ -15,7 +25,7 @@
 
     <div class="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-8 md:px-10  pl-8 md:pl-16">
         <div class="flex flex-col-reverse md:flex-row items-center justify-between py-12 gap-8">
-            <div class="w-full md:w-1/2 md:pr-12 pl-2 md:pl-12">
+            <div class="w-full md:w-2/3 md:pr-12 pl-2 md:pl-12">
                 <div class="border-t-2 border-black w-12 mb-6"></div>
                 <h2 class="text-4xl md:text-5xl font-light text-black leading-tight tracking-wide">
                     HEALTHY
@@ -23,17 +33,18 @@
                 <h1 class="text-5xl md:text-6xl font-extrabold text-black leading-tight mb-6">
                     TASTY FOOD
                 </h1>
-                <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-8 max-w-md">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...
+                <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
                 <a href="{{ route('public.tentang') }}"
-                   class="inline-block bg-black text-white font-bold uppercase px-6 py-3 rounded-md hover:bg-gray-800 transition">
+                   class="inline-block bg-black text-white  uppercase px-6 py-3  hover:bg-gray-800 transition">
                     Tentang Kami
                 </a>
             </div>
         </div>
     </div>
 </section>
+
 
 <!-- SECTION 2: Tentang Kami -->
 <section class="py-16 bg-white border-t border-gray-200">
@@ -60,7 +71,7 @@
                         <img src="{{ asset('assets/img-1.png') }}" alt="Fitur {{ $i }}"
                              class="w-full h-full rounded-full object-cover">
                     </div>
-                    <h3 class="mt-2 font-bold text-xl text-gray-900">Judul Fitur {{ $i }}</h3>
+                    <h3 class="mt-6 font-bold text-xl text-gray-900">Judul Fitur {{ $i }}</h3>
                     <p class="mt-2 text-gray-600 text-sm leading-relaxed">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis soluta eos, reiciendis officiis perferendis pariatur voluptatum tempora sint ut officia inventore ipsum id eveniet numquam aperiam ad voluptate. Beatae, fugiat!
                     </p>
