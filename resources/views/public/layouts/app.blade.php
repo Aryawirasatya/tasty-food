@@ -8,15 +8,12 @@
     {{-- Favicon --}}
     <link rel="icon" href="{{ asset('assets/public/images/favicon.png') }}">
 
-    {{-- Tailwind CSS & JS via Vite --}}
-   {{-- Load hasil build saja --}}
-{{-- Tailwind CSS & JS via Vite --}}
-@vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    {{-- Load CSS hasil build --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-DWr-WpDS.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-Cis5uVHU.css') }}">
 
     <style>
     [x-cloak] { display: none !important; }
-
     </style>
 
     {{-- Swiper CSS --}}
@@ -27,12 +24,13 @@
 
     {{-- Swiper JS --}}
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    {{-- JS hasil build --}}
+    <script type="module" src="{{ asset('build/assets/app-kSXiIrfw.js') }}"></script>
 </head>
 <body data-page="{{ request()->routeIs('home') ? 'home' : 'other' }}">
 
     {{-- Navbar --}}
-
-    {{-- Navbar khusus untuk halaman home / default --}}
     @if (request()->is('/'))
         @include('public.partials.navbar_home')
     @else
@@ -45,9 +43,9 @@
     </main>
 
     {{-- Footer --}}
-    @include('public.partials.footer')  
+    @include('public.partials.footer')
 
-    {{-- Inisialisasi Swiper jika ada komponen swiper di halaman --}}
+    {{-- Inisialisasi Swiper --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             if (typeof Swiper !== 'undefined') {
