@@ -9,9 +9,9 @@
     <link rel="icon" href="{{ asset('assets/public/images/favicon.png') }}">
 
     {{-- Tailwind CSS & JS via Vite --}}
-    <link rel="stylesheet" href="{{ asset('build/assets/app-Cis5uVHU.css') }}">
-<link rel="stylesheet" href="{{ asset('build/assets/app-v-BeIiLc.css') }}">
-<script src="{{ asset('build/assets/app-kSXiIrfw.js') }}" defer></script>
+   {{-- Load hasil build saja --}}
+    <script src="{{ asset('build/assets/app-kSXiIrfw.js') }}" defer></script>
+
 
     <style>
     [x-cloak] { display: none !important; }
