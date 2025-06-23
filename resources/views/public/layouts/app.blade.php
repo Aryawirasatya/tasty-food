@@ -9,7 +9,10 @@
     <link rel="icon" href="{{ asset('assets/public/images/favicon.png') }}">
 
     {{-- Tailwind CSS & JS via Vite --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('build/assets/app-Cis5uVHU.css') }}">
+<link rel="stylesheet" href="{{ asset('build/assets/app-v-BeIiLc.css') }}">
+<script src="{{ asset('build/assets/app-kSXiIrfw.js') }}" defer></script>
+
     <style>
     [x-cloak] { display: none !important; }
 
