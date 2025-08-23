@@ -6,26 +6,32 @@
 @section('content')
 
 <style>
-@media (max-width: 1024px) {
-  .hide-under-1025 {
-    display: none !important;
+  @media (max-width: 1023px) {
+    .hero-img {
+      max-width: 300px !important;
+      transform: translateX(10%) translateY(15%) !important;
+    }
+
+    .hero-img-wrapper {                                                                         
+      top: 60px !important;
+      right: -30px;
+    }
   }
-}
 </style>
 
 
-<!-- HERO SECTION -->
 <section class="relative bg-[#f9f9f9] min-h-screen flex flex-col justify-center -mt-[68px] pt-[68px] overflow-hidden">
-    <div class="absolute top-0 right-0 z-0 hidden lg:block hide-under-1025">
-
+    
+    <div class="hero-img-wrapper absolute top-0 right-0 z-0">
         <img src="{{ asset('assets/img-4-2000x2000.png') }}"
              alt="Healthy Tasty Food"
-             class="max-w-[550px] lg:max-w-[750px] w-full h-auto object-cover rounded-full translate-x-[20%] -translate-y-[20%] drop-shadow-lg">
+             class="hero-img max-w-[550px] lg:max-w-[750px] w-full h-auto object-cover rounded-full translate-x-[20%] -translate-y-[20%] drop-shadow-lg">
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-8 md:px-10  pl-8 md:pl-16">
-        <div class="flex flex-col-reverse md:flex-row items-center justify-between py-12 gap-8">
-            <div class="w-full md:w-2/3 md:pr-12 pl-2 md:pl-12">
+    <div class="relative z-10 w-full px-6 sm:px-8 md:px-16">
+        <div class="flex flex-col-reverse md:flex-row items-start justify-start pt-24 md:py-12 gap-8">
+
+            <div class="w-full md:w-2/3 md:pr-6">
                 <div class="border-t-2 border-black w-12 mb-6"></div>
                 <h2 class="text-4xl md:text-5xl font-light text-black leading-tight tracking-wide">
                     HEALTHY
@@ -36,14 +42,20 @@
                 <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </p>
-                <a href="{{ route('public.tentang') }}"
-                   class="inline-block bg-black text-white  uppercase px-6 py-3  hover:bg-gray-800 transition">
-                    Tentang Kami
-                </a>
+                <div class="w-full text-center md:text-left">
+                    <a href="{{ route('public.tentang') }}"
+                       class="inline-block bg-black text-white uppercase px-6 py-3 hover:bg-gray-800 transition">
+                        Tentang Kami
+                    </a>
+                </div>
+
             </div>
         </div>
     </div>
 </section>
+
+
+ 
 
 
 <!-- SECTION 2: Tentang Kami -->
@@ -105,7 +117,7 @@
                             </a>
                         </h3>
                         <p class="text-gray-600 text-sm mb-4 flex-grow">
-                            {{ \Illuminate\Support\Str::limit(strip_tags($featuredBerita->konten), 300, '...') }}
+                            {{ \Illuminate\Support\Str::limit(strip_tags($featuredBerita->konten), 600, '...') }}
                         </p>
                         <div class="flex justify-between items-center mt-auto">
                             <a href="{{ route('berita.show', $featuredBerita->id) }}" class="text-sm text-yellow-500 hover:underline">
@@ -156,19 +168,20 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
         <h2 class="text-2xl font-bold text-gray-800 mb-8">Galeri Kami</h2>
 
-        <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+        <div class="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
             @foreach($galeri as $item)
                 <div class="w-full aspect-square overflow-hidden rounded-xl shadow-md">
                     @if($item->gambar)
                         <img src="{{ asset('storage/' . $item->gambar) }}"
-                             alt="{{ $item->judul }}"
-                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                            alt="{{ $item->judul }}"
+                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                     @else
                         <div class="w-full h-full bg-gray-200"></div>
                     @endif
                 </div>
             @endforeach
         </div>
+
 
         <div class="mt-8">
             <a href="{{ route('public.galeri') ?? route('galeri.index') }}"

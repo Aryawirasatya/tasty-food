@@ -46,6 +46,12 @@ class InformasiKontakController extends Controller
             'url_telepon' => 'nullable|string',
             'url_alamat' => 'nullable|string',
         ]);
+        if (!$request->filled('link_maps') && $request->filled('latitude') && $request->filled('longitude')) {
+    $lat = $request->input('latitude');
+    $lng = $request->input('longitude');
+    // URL embed yang aman untuk iframe
+    $validated['link_maps'] = "https://www.google.com/maps?q={$lat},{$lng}&z=15&hl=id&output=embed";
+}
 
         $kontak = InformasiKontak::firstOrFail();
         $kontak->update($validated);

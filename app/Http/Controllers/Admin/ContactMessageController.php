@@ -12,7 +12,7 @@ class ContactMessageController extends Controller
 {
     public function index()
     {
-        if (!auth()->user()?->canAkses('akses_pesan')) {
+        if (!auth()->user()?->Akses('akses_pesan')) {
             abort(403);
         }
 
@@ -22,7 +22,7 @@ class ContactMessageController extends Controller
 
     public function show(ContactMessage $kontak_pesan)
     {
-        if (!auth()->user()?->canAkses('akses_pesan')) {
+        if (!auth()->user()?->Akses('akses_pesan')) {
             abort(403);
         }
 
@@ -31,7 +31,7 @@ return view('admin.kontak.pesan.show', compact('kontak_pesan'));
 
     public function destroy(ContactMessage $kontak_pesan)
     {
-        if (!auth()->user()?->canAkses('akses_pesan')) {
+        if (!auth()->user()?->Akses('akses_pesan')) {
             abort(403);
         }
 
