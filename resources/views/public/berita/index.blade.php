@@ -5,7 +5,7 @@
 @section('content')
 {{-- HERO SECTION (opsional): gambar hero --}}
 <section class="relative">
-    <img src="{{ asset('assets/group 70@2x.png') }}" alt="Berita Hero"
+    <img src="{{ asset('assets/Group 70@2x.png') }}" alt="Berita Hero"
          class="w-full h-[450px] object-cover brightness-50">
     <div class="absolute inset-0 flex items-center justify-start px-8 md:px-16">
         <h1 class="text-white text-4xl md:text-5xl font-bold">BERITA KAMI</h1>

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\InformasiKontak;
 use App\Models\ContactMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMessageNotification;
+
 use Illuminate\Support\Facades\Http;
 
 class KontakController extends Controller
@@ -51,14 +54,16 @@ class KontakController extends Controller
         }
 
         // Simpan pesan
-        ContactMessage::create([
+       $message = ContactMessage::create([
             'nama'            => $validated['nama'],
             'email'           => $validated['email'],
             'subject'         => $validated['subject'],
             'pesan'           => $validated['pesan'],
-            // opsional: simpan skor
             'recaptcha_score' => (float) ($result['score'] ?? 0),
         ]);
+
+        $to = env('MAIL_TO_ADDRESS', config('mail.from.address'));
+        Mail::to($to)->send(new ContactMessageNotification($message));
 
         return redirect()->route('kontak')->with('success', 'Pesan Anda berhasil dikirim!');
     }

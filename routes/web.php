@@ -56,7 +56,7 @@ Route::middleware(['auth', 'IsAdmin'])->prefix('admin')->name('admin.')->group(f
     // Galeri
     Route::resource('galeri', GaleriController::class);
     
-Route::resource('berita', BeritaController::class);
+    Route::resource('berita', BeritaController::class);
 
 
 
@@ -70,9 +70,6 @@ Route::resource('berita', BeritaController::class);
     // Pesan Kontak
     Route::resource('kontak-pesan', ContactMessageController::class)->only(['index', 'show', 'destroy']);
 
-    // Dummy Test
-    Route::view('/test-form', 'test');
-    Route::post('/debug-test', fn () => dd('Form berhasil terkirim'));
 
     // User & Role (Hanya Superadmin)
     Route::middleware('IsSuperAdmin')->group(function () {

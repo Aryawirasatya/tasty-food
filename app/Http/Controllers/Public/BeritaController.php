@@ -13,14 +13,24 @@ class BeritaController extends Controller
      */
 public function index()
 {
-    // Ambil 1 berita terbaru sebagai featured
-    $featured = Berita::latest()->first();
+    // Prioritas: berita yang ditandai utama
+    $featured = \App\Models\Berita::where('utama', true)->latest()->first();
 
-    // Ambil berita lain yang bukan featured
-    $others = Berita::where('id', '!=', optional($featured)->id)->latest()->paginate(6);
+    // Fallback jika belum ada yg ditandai utama
+    if (!$featured) {
+        $featured = \App\Models\Berita::latest()->first();
+    }
+
+    // Berita lainnya (kecuali featured bila ada)
+    $othersQuery = \App\Models\Berita::query();
+    if ($featured) {
+        $othersQuery->where('id', '!=', $featured->id);
+    }
+    $others = $othersQuery->latest()->paginate(6);
 
     return view('public.berita.index', compact('featured', 'others'));
 }
+
 
 
     /**

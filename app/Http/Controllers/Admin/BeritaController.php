@@ -38,25 +38,26 @@ class BeritaController extends Controller
     }
 
     $validated = $request->validate([
-        'judul' => 'required|string|max:255',
+        'judul'  => 'required|string|max:255',
         'konten' => 'required',
         'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        'utama' => 'nullable|boolean',
+        'utama'  => 'nullable|boolean',
     ]);
 
-    // Upload gambar jika ada
     if ($request->hasFile('gambar')) {
         $validated['gambar'] = $request->file('gambar')->store('berita', 'public');
     }
 
-    // Ubah checkbox 'utama' jadi boolean true/false
-    $validated['utama'] = $request->has('utama');
+    // ubah checkbox ke boolean
+    $validated['utama'] = $request->boolean('utama');
 
-    // Tambahkan slug ke dalam array validated
-    $validated['slug'] = Str::slug($validated['judul']);
+    // jika diset utama, nonaktifkan yang lain
+    if ($validated['utama']) {
+        \App\Models\Berita::query()->update(['utama' => false]);
+    }
 
-    // Simpan data
-    Berita::create($validated);
+    // TIDAK membuat slug apa pun
+    \App\Models\Berita::create($validated);
 
     return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil ditambahkan.');
 }
@@ -72,33 +73,38 @@ class BeritaController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        if (!auth()->user()->canAkses('akses_berita')) {
-            abort(403);
-        }
-
-        $berita = Berita::findOrFail($id);
-
-        $validated = $request->validate([
-            'judul' => 'required|string|max:255',
-            'konten' => 'required',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'utama' => 'nullable|boolean',
-        ]);
-
-        if ($request->hasFile('gambar')) {
-            // Hapus gambar lama jika ada
-            if ($berita->gambar) {
-                Storage::disk('public')->delete($berita->gambar);
-            }
-            $validated['gambar'] = $request->file('gambar')->store('berita', 'public');
-        }
-
-        $validated['utama'] = $request->has('utama');
-        $berita->update($validated);
-
-        return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil diperbarui.');
+{
+    if (!auth()->user()->canAkses('akses_berita')) {
+        abort(403);
     }
+
+    $berita = \App\Models\Berita::findOrFail($id);
+
+    $validated = $request->validate([
+        'judul'  => 'required|string|max:255',
+        'konten' => 'required',
+        'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        'utama'  => 'nullable|boolean',
+    ]);
+
+    if ($request->hasFile('gambar')) {
+        if ($berita->gambar) {
+            \Storage::disk('public')->delete($berita->gambar);
+        }
+        $validated['gambar'] = $request->file('gambar')->store('berita', 'public');
+    }
+
+    $validated['utama'] = $request->boolean('utama');
+
+    if ($validated['utama']) {
+        // pastikan cuma satu yang utama
+        \App\Models\Berita::where('id', '!=', $berita->id)->update(['utama' => false]);
+    }
+
+    $berita->update($validated);
+
+    return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil diperbarui.');
+}
 
     public function destroy($id)
     {

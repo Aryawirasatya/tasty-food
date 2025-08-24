@@ -3,7 +3,7 @@
 @section('content')
 
 <!-- Hero Section -->
-<section class="relative z-[10] bg-cover bg-center h-96" style="background-image: url('{{ asset('assets/group-70-2x.png') }}');">
+<section class="relative z-[10] bg-cover bg-center h-96" style="background-image: url('{{ asset('assets/Group 70@2x.png') }}');">
   <div class="bg-black bg-opacity-50 w-full h-full flex items-center justify-start px-10">
     <div class="w-full text-center md:text-left px-6">
       <h1 class="text-white text-5xl font-bold">KONTAK KAMI</h1>
@@ -67,50 +67,57 @@
     </div>
   </form>
 
-  {{-- Info Kontak --}}
-  <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12 text-center text-gray-800">
-    <!-- Email -->
-    <div class="flex flex-col items-center">
-      <div class="h-16 w-16 rounded-full flex items-center justify-center mb-4 overflow-hidden">
-        <img src="{{ asset('assets/Group 66.png') }}" alt="Email Icon" class="h-10 w-10 object-contain">
-      </div>
-      <h4 class="font-bold uppercase text-sm tracking-wider">Email</h4>
-      <a href="mailto:{{ $kontak->email ?? 'tastyfood@gmail.com' }}" class="text-sm mt-1 hover:underline">
-        {{ $kontak->email ?? 'tastyfood@gmail.com' }}
-      </a>
-    </div>
+ {{-- Info Kontak (no-box hover) --}}
+<div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12 text-center text-gray-800">
 
-    <!-- Phone -->
-    <div class="flex flex-col items-center">
-      <div class="h-16 w-16 rounded-full flex items-center justify-center mb-4 overflow-hidden">
-        <img src="{{ asset('assets/Group 67.png') }}" alt="Phone Icon" class="h-10 w-10 object-contain">
-      </div>
-      <h4 class="font-bold uppercase text-sm tracking-wider">Phone</h4>
-      <a href="tel:{{ preg_replace('/[^0-9+]/', '', $kontak->telepon ?? '+6281234567890') }}" class="text-sm mt-1 hover:underline">
-        {{ $kontak->telepon ?? '+62 812 3456 7890' }}
-      </a>
+  {{-- Email --}}
+  <div class="flex flex-col items-center group">
+    <div class="h-16 w-16 rounded-full flex items-center justify-center mb-4 overflow-hidden transition-transform duration-300 group-hover:scale-110">
+      <img src="{{ asset('assets/Group 66.png') }}" alt="Email Icon"
+           class="h-10 w-10 object-contain opacity-90 transition-opacity duration-300 group-hover:opacity-100">
     </div>
-
-    <!-- Location -->
-    <div class="flex flex-col items-center">
-      @php
-        $clickUrl = $kontak->alamat
-          ? 'https://www.google.com/maps/search/?api=1&query=' . urlencode($kontak->alamat)
-          : (!empty($kontak->latitude) && !empty($kontak->longitude)
-              ? 'https://www.google.com/maps?q='.$kontak->latitude.','.$kontak->longitude
-              : '#');
-      @endphp
-      <a href="{{ $clickUrl }}" target="_blank" rel="noopener">
-        <div class="h-16 w-16 rounded-full flex items-center justify-center mb-4 overflow-hidden hover:scale-110 transition">
-          <img src="{{ asset('assets/Group 68.png') }}" alt="Location Icon" class="h-10 w-10 object-contain">
-        </div>
-      </a>
-      <h4 class="font-bold uppercase text-sm tracking-wider">Location</h4>
-      <p class="text-sm mt-1 text-center px-2">
-        {{ $kontak->alamat ?? 'Alamat belum tersedia' }}
-      </p>
-    </div>
+    <h4 class="font-bold uppercase text-sm tracking-wider transition-colors duration-300 group-hover:text-red-600">Email</h4>
+    <a href="mailto:{{ $kontak->email ?? 'tastyfood@gmail.com' }}"
+       class="text-sm mt-1 hover:underline transition-colors duration-200 group-hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-400 rounded">
+      {{ $kontak->email ?? 'tastyfood@gmail.com' }}
+    </a>
   </div>
+
+  {{-- Phone --}}
+  <div class="flex flex-col items-center group">
+    <div class="h-16 w-16 rounded-full flex items-center justify-center mb-4 overflow-hidden transition-transform duration-300 group-hover:scale-110">
+      <img src="{{ asset('assets/Group 67.png') }}" alt="Phone Icon"
+           class="h-10 w-10 object-contain opacity-90 transition-opacity duration-300 group-hover:opacity-100">
+    </div>
+    <h4 class="font-bold uppercase text-sm tracking-wider transition-colors duration-300 group-hover:text-red-600">Phone</h4>
+    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $kontak->telepon ?? '+6281234567890') }}"
+       class="text-sm mt-1 hover:underline transition-colors duration-200 group-hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-400 rounded">
+      {{ $kontak->telepon ?? '+62 812 3456 7890' }}
+    </a>
+  </div>
+
+  {{-- Location --}}
+  @php
+    $clickUrl = $kontak->alamat
+      ? 'https://www.google.com/maps/search/?api=1&query=' . urlencode($kontak->alamat)
+      : (!empty($kontak->latitude) && !empty($kontak->longitude)
+          ? 'https://www.google.com/maps?q='.$kontak->latitude.','.$kontak->longitude
+          : '#');
+  @endphp
+  <div class="flex flex-col items-center group">
+    <a href="{{ $clickUrl }}" target="_blank" rel="noopener"
+       class="h-16 w-16 rounded-full flex items-center justify-center mb-4 overflow-hidden transition-transform duration-300 group-hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-400">
+      <img src="{{ asset('assets/Group 68.png') }}" alt="Location Icon"
+           class="h-10 w-10 object-contain opacity-90 transition-opacity duration-300 group-hover:opacity-100">
+    </a>
+    <h4 class="font-bold uppercase text-sm tracking-wider transition-colors duration-300 group-hover:text-red-600">Location</h4>
+    <p class="text-sm mt-1 text-center px-2 transition-colors duration-200 group-hover:text-red-500">
+      {{ $kontak->alamat ?? 'Alamat belum tersedia' }}
+    </p>
+  </div>
+
+</div>
+
 </section>
 
 {{-- Map Section: pakai link_maps (dibentuk dari alamat), fallback ke lat/lng --}}

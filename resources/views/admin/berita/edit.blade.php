@@ -1,49 +1,133 @@
 @extends('admin.layouts.app')
+@section('title', 'Edit Berita')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
-    <h1 class="text-2xl font-bold mb-6">Edit Berita</h1>
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">Edit Berita</h1>
+    <a href="{{ route('admin.berita.index') }}" class="btn btn-outline-secondary">
+      <i class="fas fa-arrow-left me-1"></i> Kembali
+    </a>
+  </div>
 
-    <form method="POST" action="{{ route('admin.berita.update', $berita->id) }}" enctype="multipart/form-data" class="bg-white p-6 rounded shadow-md">
-        @csrf
-        @method('PUT')
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <div class="fw-semibold mb-2">Periksa kembali inputan kamu:</div>
+      <ul class="mb-0">
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
 
-        {{-- Judul --}}
-        <div class="mb-4">
-            <label for="judul" class="block text-gray-700 font-semibold mb-2">Judul</label>
-            <input type="text" name="judul" id="judul" value="{{ old('judul', $berita->judul) }}" class="w-full border border-gray-300 p-2 rounded">
-            @error('judul')
-                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-            @enderror
+  <form method="POST" action="{{ route('admin.berita.update', $berita->id) }}" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
+
+    <div class="row g-4">
+      {{-- Kolom kiri: konten utama + opsi + tombol (diseragamkan) --}}
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            {{-- Judul --}}
+            <div class="mb-3">
+              <label for="judul" class="form-label fw-semibold">Judul</label>
+              <input type="text" name="judul" id="judul" value="{{ old('judul', $berita->judul) }}" class="form-control js-editor" required>
+              @error('judul')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+              @enderror
+            </div>
+
+            {{-- Konten --}}
+            <div class="mb-4">
+              <label for="konten" class="form-label fw-semibold">Konten</label>
+              <textarea name="konten" id="konten" rows="10" class="form-control js-editor " required>{{ old('konten', $berita->konten) }}</textarea>
+              @error('konten')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+              @enderror
+            </div>
+
+            {{-- Opsi: berita utama --}}
+            <div class="form-check form-switch mb-4">
+              <input class="form-check-input" type="checkbox" id="utama" name="utama" {{ old('utama', $berita->utama) ? 'checked' : '' }}>
+              <label class="form-check-label" for="utama">Tandai sebagai <strong>berita utama</strong></label>
+            </div>
+
+            {{-- Tombol --}}
+            <div class="d-flex justify-content-between">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-1"></i> Update
+              </button>
+              <a href="{{ route('admin.berita.index') }}" class="btn btn-light border">Batal</a>
+            </div>
+          </div>
         </div>
+      </div>
 
-        {{-- Konten --}}
-        <div class="mb-4">
-            <label for="konten" class="block text-gray-700 font-semibold mb-2">Konten</label>
-            <textarea name="konten" id="konten" rows="6" class="w-full border border-gray-300 p-2 rounded">{{ old('konten', $berita->konten) }}</textarea>
-            @error('konten')
-                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-            @enderror
-        </div>
-
-        {{-- Gambar --}}
-        <div class="mb-4">
-            <label for="gambar" class="block text-gray-700 font-semibold mb-2">Gambar (opsional)</label>
-            <input type="file" name="gambar" id="gambar" class="w-full border border-gray-300 p-2 rounded">
-            @if ($berita->gambar)
-                <p class="text-sm mt-2">Gambar Saat Ini:</p>
-                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Gambar Berita" class="h-32 mt-1">
-            @endif
+      {{-- Kolom kanan: gambar (sama seperti tambah, tapi tampilkan gambar saat ini) --}}
+      <div class="col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <label for="gambar" class="form-label fw-semibold">Gambar (opsional)</label>
+            <input type="file" name="gambar" id="gambar" class="form-control" accept="image/png,image/jpeg">
+            <div class="form-text">Upload untuk mengganti gambar. Format: JPG/PNG, maks. 2MB.</div>
             @error('gambar')
-                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+              <div class="text-danger small mt-1">{{ $message }}</div>
             @enderror
-        </div>
 
-        {{-- Tombol Submit --}}
-        <div class="flex justify-end">
-            <a href="{{ route('admin.berita.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded mr-2">Batal</a>
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Update</button>
+            <div class="mt-3">
+              @if ($berita->gambar)
+                <img id="img-current" src="{{ asset('storage/' . $berita->gambar) }}" class="img-fluid rounded mb-2" alt="Gambar saat ini">
+              @endif
+              <img id="img-preview" src="" class="img-fluid rounded d-none" alt="Preview gambar baru">
+            </div>
+          </div>
         </div>
-    </form>
+      </div>
+    </div> {{-- /row --}}
+  </form>
 </div>
+
+{{-- Preview gambar sederhana (inline agar konsisten) --}}
+<script>
+  (function () {
+    const input   = document.getElementById('gambar');
+    const preview = document.getElementById('img-preview');
+    const current = document.getElementById('img-current');
+
+    if (!input || !preview) return;
+
+    input.addEventListener('change', function () {
+      const file = this.files && this.files[0];
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove('d-none');
+        if (current) current.classList.add('d-none');
+      } else {
+        preview.src = '';
+        preview.classList.add('d-none');
+        if (current) current.classList.remove('d-none');
+      }
+    });
+  })();
+</script>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.js-editor').forEach(function (el) {
+      ClassicEditor.create(el, {
+        toolbar: [
+          'heading','|','bold','italic','link',
+          'bulletedList','numberedList','blockQuote','|',
+          'undo','redo'
+        ]
+      }).then(ed => {
+        ed.ui.view.editable.element.style.minHeight = '280px';
+      }).catch(console.error);
+    });
+  });
+</script>
+
 @endsection

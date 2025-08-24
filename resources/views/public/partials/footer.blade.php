@@ -37,21 +37,46 @@
         {{-- Kolom 4: Kontak --}}
         <div>
             <h3 class="text-xl font-semibold mb-4">Contact Info</h3>
+            @php
+                if (!isset($kontak)) {
+                    $kontak = \App\models\InformasiKontak::query()->first();
+                }
+
+                $email      = $kontak->email ?? 'tastyfood@gmail.com';
+                $emailHref  = $kontak->url_email ?: ('mailto:' . $email);
+
+                $tel        = $kontak->telepon ?? '+62 812 3456 7890';
+                $telHref    = $kontak->url_telepon ?: ('tel:' . preg_replace('/[^0-9+]/', '', $tel));
+
+                $alamatTxt  = $kontak->alamat ?? 'Kota Bandung, Jawa Barat';
+
+                $addrHref = $kontak->url_alamat
+                    ?: ($kontak->link_maps
+                        ?: ($kontak->alamat
+                            ? ('https://www.google.com/maps/search/?api=1&query=' . urlencode($kontak->alamat))
+                            : (($kontak->latitude && $kontak->longitude)
+                                ? ('https://www.google.com/maps?q=' . $kontak->latitude . ',' . $kontak->longitude)
+                                : '#')));
+            @endphp
+
             <ul class="space-y-3 text-gray-300 text-sm">
                 <li class="flex items-center gap-3">
-                    <img src="{{ asset('assets/ic_markunread_24px.png') }}" alt="Email" class="w-3 h-3">
-                    <span>tastyfood@gmail.com</span>
+                <img src="{{ asset('assets/ic_markunread_24px.png') }}" alt="Email" class="w-3 h-3">
+                <a href="{{ $emailHref }}" class="hover:text-white transition">{{ $email }}</a>
                 </li>
                 <li class="flex items-center gap-3">
-                    <img src="{{ asset('assets/ic_call_24px.png') }}" alt="Phone" class="w-3 h-3">
-                    <span>+62 812 3456 7890</span>
+                <img src="{{ asset('assets/ic_call_24px.png') }}" alt="Phone" class="w-3 h-3">
+                <a href="{{ $telHref }}" class="hover:text-white transition">{{ $tel }}</a>
                 </li>
                 <li class="flex items-center gap-3">
-                    <img src="{{ asset('assets/ic_place_24px.png') }}" alt="Location" class="w-3 h-4">
-                    <span>Kota Bandung, Jawa Barat</span>
+                <img src="{{ asset('assets/ic_place_24px.png') }}" alt="Location" class="w-3 h-4">
+                <a href="{{ $addrHref }}" target="_blank" rel="noopener" class="hover:text-white transition">
+                    {{ $alamatTxt }}
+                </a>
                 </li>
             </ul>
         </div>
+
     </div>
 
     {{-- Bawah --}}

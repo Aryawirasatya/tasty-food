@@ -3,7 +3,7 @@
 @section('content')
     <!-- Hero Section -->
 <section class="relative bg-cover bg-center h-[400px] flex items-center text-white px-10"
-style="background-image: url('{{ asset('assets/group 70@2x.png') }}');">
+style="background-image: url('{{ asset('assets/Group 70@2x.png') }}');">
     <div class="w-full text-center md:text-left">
         <h1 class="text-4xl font-bold z-10 px-6">TENTANG KAMI</h1>
     </div>

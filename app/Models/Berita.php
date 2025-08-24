@@ -15,6 +15,10 @@ class Berita extends Model
          'utama',
     ];
 
+    protected $casts = [
+        'utama' => 'boolean',
+    ];
+
     public $timestamps = true;
 
 }

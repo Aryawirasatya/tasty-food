@@ -3,9 +3,56 @@
 @section('title', 'Galeri Kami')
 
 @section('content')
+
+<style>
+    /* hilangkan ikon default Swiper */
+.swiper-button-prev::after,
+.swiper-button-next::after { content: none !important; }
+
+/* gaya umum tombol */
+.nav-btn{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:24px; height:24px; display:grid; place-items:center;
+  border-radius:9999px; color:#fff; cursor:pointer; z-index:20;
+  background:rgba(17,24,39,.55); /* hitam kebiruan transparan */
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+  backdrop-filter:blur(6px);
+  transition:background .2s ease, transform .18s ease, box-shadow .2s ease, opacity .2s;
+  pointer-events:auto;
+}
+.swiper-button-prev{ left:12px; }
+.swiper-button-next{ right:12px; }
+
+.nav-btn:hover{
+  background:rgba(17,24,39,.8);
+  transform:translateY(-50%) scale(1.06);
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
+}
+.nav-btn:active{ transform:translateY(-50%) scale(.98); }
+.nav-btn:focus-visible{
+  outline:0;
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.35),
+    0 8px 24px rgba(0,0,0,.3);
+}
+
+/* responsive: sedikit lebih besar di md+ */
+@media (min-width:768px){
+  .nav-btn{ width:58px; height:58px; }
+  .swiper-button-prev{ left:16px; }
+  .swiper-button-next{ right:16px; }
+}
+
+/* state disabled (kalau loop:false & ujung) */
+.nav-btn[aria-disabled="true"]{
+  opacity:.45; pointer-events:none;
+}
+
+</style>
     {{-- SECTION: HERO BANNER --}}
     <div class="relative w-full h-[400px] overflow-hidden">
-        <img src="{{ asset('assets/group 70@2x.png') }}"
+        <img src="{{ asset('assets/Group 70@2x.png') }}"
              class="object-cover w-full h-full transform scale-[1.1]" alt="Hero Galeri">
         <div class="absolute inset-0 bg-black bg-opacity-40"></div>
         <div class="absolute top-1/2 left-6 sm:left-10 transform -translate-y-1/2 text-white z-10">
@@ -29,19 +76,26 @@
                 @endforeach
             </div>
 
-            {{-- Tombol prev --}}
-            <div class="swiper-button-prev !text-white !bg-black/40 hover:!bg-black/70 
-                        w-14 h-14 rounded-full flex items-center justify-center absolute z-10 
-                        top-1/2 -translate-y-1/2 left-4 shadow-lg backdrop-blur-sm
-                        transition duration-300 ease-in-out">
-            </div>
+            <!-- Tombol prev -->
+            <button type="button" aria-label="Slide sebelumnya"
+                    class="nav-btn swiper-button-prev">
+            <!-- ikon panah kiri -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                width="24" height="24" fill="currentColor" aria-hidden="true">
+                <path d="M15.5 19.5a1 1 0 0 1-.7-.3l-7-7a1 1 0 0 1 0-1.4l7-7a1 1 0 1 1 1.4 1.4L9.9 12l6.3 6.3a1 1 0 0 1-.7 1.2z"/>
+            </svg>
+            </button>
 
-            {{-- Tombol next --}}
-            <div class="swiper-button-next !text-white !bg-black/40 hover:!bg-black/70 
-                        w-14 h-14 rounded-full flex items-center justify-center absolute z-10 
-                        top-1/2 -translate-y-1/2 right-4 shadow-lg backdrop-blur-sm
-                        transition duration-300 ease-in-out">
-            </div>
+            <!-- Tombol next -->
+            <button type="button" aria-label="Slide berikutnya"
+                    class="nav-btn swiper-button-next">
+            <!-- ikon panah kanan -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                width="24" height="24" fill="currentColor" aria-hidden="true">
+                <path d="M8.5 19.5a1 1 0 0 1-.7-1.7L14.1 12 7.8 5.7a1 1 0 1 1 1.4-1.4l7 7a1 1 0 0 1 0 1.4l-7 7a1 1 0 0 1-.7.3z"/>
+            </svg>
+            </button>
+
         </div>
     </div>
 </div>
