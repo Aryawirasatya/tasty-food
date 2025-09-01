@@ -33,12 +33,20 @@
                     <td>
                         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
                         @if(auth()->id() != $user->id)
-                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus user ini?')">
+                            <form action="{{ route('admin.users.destroy', $user->id) }}"
+                                    method="POST" class="d-inline js-delete-form">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm">Hapus</button>
+                                <button type="button"
+                                        class="btn btn-danger btn-sm js-delete-btn"
+                                        data-title="Hapus User"
+                                        data-text="Yakin ingin menghapus <b>{{ e($user->name) }}</b>?">
+                                Hapus
+                                </button>
                             </form>
                         @endif
+
+
                     </td>
                 </tr>
             @empty

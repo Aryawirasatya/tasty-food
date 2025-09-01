@@ -24,7 +24,6 @@
         @csrf
         @method('DELETE')
         <button class="btn btn-danger">Hapus Pesan</button>
-        <a href="{{ route('admin.kontak-pesan.index') }}" class="btn btn-secondary">Batal</a>
 
     </form>
 </div>

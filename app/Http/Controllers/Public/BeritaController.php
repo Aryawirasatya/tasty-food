@@ -8,15 +8,11 @@ use Illuminate\Http\Request;
 
 class BeritaController extends Controller
 {
-    /**
-     * Menampilkan daftar semua berita untuk pengunjung.
-     */
+ 
 public function index()
 {
-    // Prioritas: berita yang ditandai utama
     $featured = \App\Models\Berita::where('utama', true)->latest()->first();
 
-    // Fallback jika belum ada yg ditandai utama
     if (!$featured) {
         $featured = \App\Models\Berita::latest()->first();
     }
@@ -26,16 +22,11 @@ public function index()
     if ($featured) {
         $othersQuery->where('id', '!=', $featured->id);
     }
-    $others = $othersQuery->latest()->paginate(6);
+    $others = $othersQuery->latest()->paginate(8);
 
     return view('public.berita.index', compact('featured', 'others'));
 }
-
-
-
-    /**
-     * Menampilkan detail berita berdasarkan slug.
-     */
+ 
     public function show($id)
 {
     $berita = Berita::findOrFail($id);

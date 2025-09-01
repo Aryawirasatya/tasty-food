@@ -13,17 +13,17 @@
     @if(session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
     @if($berita->count())
         <div class="table-responsive">
             <table class="table table-bordered table-striped align-middle">
-                <thead class="table-dark">
+                <thead class="table">
                     <tr>
                         <th style="width: 50px;">No</th>
                         <th>Judul</th>
+                        <th>utama</th>
                         <th>Konten</th>
                         <th style="width: 120px;">Gambar</th>
                         <th style="width: 120px;">Tanggal</th>
@@ -32,15 +32,17 @@
                 </thead>
                 <tbody>
                     @foreach ($berita as $item)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-
-                            <td>
-                                {{ $item->judul }}
-                                @if($item->utama)
-                                    <span class="badge bg-success ms-2 text-white">UTAMA</span>
-                                @endif
-                            </td>
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        
+                        <td>
+                            {{ $item->judul }}
+                            
+                        </td>
+                        <td>@if($item->utama)
+                                <span class="badge bg-success ms-2 text-white">UTAMA</span>
+                            @endif
+                        </td>
 
                             <td>{{ Str::limit(strip_tags($item->konten), 60) }}</td>
 
@@ -52,7 +54,6 @@
                                 @endif
                             </td>
 
-
                             <td>{{ $item->created_at->format('d-m-Y') }}</td>
 
                             <td>
@@ -62,13 +63,18 @@
                                 <a href="{{ route('admin.berita.edit', $item->id) }}" class="btn btn-warning btn-sm mb-1">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
-                                <form action="{{ route('admin.berita.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus berita ini?')">
+                                <form action="{{ route('admin.berita.destroy', $item->id) }}"
+                                    method="POST" class="d-inline js-delete-form">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger btn-sm">
+
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm js-delete-btn"
+                                            data-title="{{ Str::limit($item->judul, 60) }}">
                                         <i class="fas fa-trash"></i> Hapus
                                     </button>
                                 </form>
+
                             </td>
                         </tr>
                     @endforeach

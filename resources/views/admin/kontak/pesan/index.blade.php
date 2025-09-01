@@ -31,13 +31,19 @@
                         <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
                         <td>
                             <a href="{{ route('admin.kontak-pesan.show', $item->id) }}" class="btn btn-info btn-sm">Lihat</a>
-
-
-                            <form action="{{ route('admin.kontak-pesan.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus pesan ini?')">
+                             <form action="{{ route('admin.kontak-pesan.destroy', $item->id) }}"
+                                method="POST" class="d-inline js-delete-form">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm">Hapus</button>
+
+                                <button type="button"
+                                        class="btn btn-danger btn-sm js-delete-btn"
+                                        data-title="{{ $item->subject ?? 'Pesan dari ' . ($item->nama ?? '-') }}">
+                                    <i class="fas fa-trash-alt me-1"></i> Hapus
+                                </button>
                             </form>
+
+
                         </td>
                     </tr>
                 @endforeach

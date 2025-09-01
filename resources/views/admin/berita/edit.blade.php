@@ -33,7 +33,7 @@
             {{-- Judul --}}
             <div class="mb-3">
               <label for="judul" class="form-label fw-semibold">Judul</label>
-              <input type="text" name="judul" id="judul" value="{{ old('judul', $berita->judul) }}" class="form-control js-editor" required>
+              <input type="text" name="judul" id="judul" value="{{ old('judul', $berita->judul) }}" class="form-control" required>
               @error('judul')
                 <div class="text-danger small mt-1">{{ $message }}</div>
               @enderror
@@ -50,7 +50,7 @@
 
             {{-- Opsi: berita utama --}}
             <div class="form-check form-switch mb-4">
-              <input class="form-check-input" type="checkbox" id="utama" name="utama" {{ old('utama', $berita->utama) ? 'checked' : '' }}>
+              <input class="form-check-input" type="checkbox" value="1" id="utama" name="utama" {{ old('utama', $berita->utama) ? 'checked' : '' }}>
               <label class="form-check-label" for="utama">Tandai sebagai <strong>berita utama</strong></label>
             </div>
 
@@ -65,7 +65,7 @@
         </div>
       </div>
 
-      {{-- Kolom kanan: gambar (sama seperti tambah, tapi tampilkan gambar saat ini) --}}
+ 
       <div class="col-lg-4">
         <div class="card shadow-sm">
           <div class="card-body">
@@ -85,11 +85,10 @@
           </div>
         </div>
       </div>
-    </div> {{-- /row --}}
+    </div>  
   </form>
 </div>
-
-{{-- Preview gambar sederhana (inline agar konsisten) --}}
+ 
 <script>
   (function () {
     const input   = document.getElementById('gambar');

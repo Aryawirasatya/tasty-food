@@ -26,10 +26,18 @@
             <td><img src="{{ asset('storage/' . $item->gambar) }}" width="100"></td>
             <td>
                 <a href="{{ route('admin.galeri.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                <form action="{{ route('admin.galeri.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?')">
-                    @csrf @method('DELETE')
-                    <button class="btn btn-danger btn-sm">Hapus</button>
+                <form action="{{ route('admin.galeri.destroy', $item->id) }}"
+                        method="POST"
+                        class="d-inline js-confirm-delete"
+                        data-title="Hapus Berita"
+                        data-text="Yakin ingin menghapus <b>{{ Str::limit($item->judul, 60) }}</b>?">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i> Hapus
+                    </button>
                 </form>
+
             </td>
         </tr>
         @endforeach

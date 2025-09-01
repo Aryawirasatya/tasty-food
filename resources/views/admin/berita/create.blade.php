@@ -21,40 +21,33 @@
     </div>
   @endif
 
-  <form action="{{ route('admin.berita.store') }}" method="POST" enctype="multipart/form-data">
+  <form id="form-berita" action="{{ route('admin.berita.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     <div class="row g-4">
-      {{-- Kolom kiri: konten utama --}}
       <div class="col-lg-8">
         <div class="card shadow-sm">
           <div class="card-body">
-            {{-- Judul --}}
             <div class="mb-3">
               <label for="judul" class="form-label fw-semibold">Judul</label>
-              <input type="text" name="judul" id="judul" value="{{ old('judul') }}" class="form-control js-editor" required>
-              @error('judul')
-                <div class="text-danger small mt-1">{{ $message }}</div>
-              @enderror
+              <input type="text" name="judul" id="judul" value="{{ old('judul') }}" class="form-control" required>
+              @error('judul') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
             </div>
 
-            {{-- Konten --}}
             <div class="mb-4">
               <label for="konten" class="form-label fw-semibold">Konten</label>
-              <textarea name="konten" id="konten" rows="10" class="form-control js-editor" required>{{ old('konten') }}</textarea>
-              @error('konten')
-                <div class="text-danger small mt-1">{{ $message }}</div>
-              @enderror
+              <textarea name="konten" id="konten" rows="10" class="form-control">{{ old('konten') }}</textarea>
+              @error('konten') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
             </div>
 
-            {{-- Opsi & tombol --}}
+            <input type="hidden" name="utama" value="0">
             <div class="form-check form-switch mb-4">
-              <input class="form-check-input" type="checkbox" id="utama" name="utama" {{ old('utama') ? 'checked' : '' }}>
+              <input class="form-check-input" type="checkbox" id="utama" name="utama" value="1" {{ old('utama') ? 'checked' : '' }}>
               <label class="form-check-label" for="utama">Tandai sebagai <strong>berita utama</strong></label>
             </div>
 
-            <div class="d-flex justify-content-between">
-              <button type="submit" class="btn btn-primary">
+            <div class="d-flex gap-2">
+              <button id="btn-submit" type="submit" class="btn btn-primary">
                 <i class="fas fa-save me-1"></i> Simpan
               </button>
               <a href="{{ route('admin.berita.index') }}" class="btn btn-light border">Batal</a>
@@ -63,16 +56,13 @@
         </div>
       </div>
 
-      {{-- Kolom kanan: gambar --}}
       <div class="col-lg-4">
         <div class="card shadow-sm">
           <div class="card-body">
             <label for="gambar" class="form-label fw-semibold">Gambar (opsional)</label>
-            <input type="file" name="gambar" id="gambar" class="form-control" accept="image/png,image/jpeg">
-            <div class="form-text">Format: JPG/PNG, maks. 2MB.</div>
-            @error('gambar')
-              <div class="text-danger small mt-1">{{ $message }}</div>
-            @enderror
+            <input type="file" name="gambar" id="gambar" class="form-control" accept="image/jpeg,image/png">
+            <div class="form-text">JPG/PNG, maks. 2MB.</div>
+            @error('gambar') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
 
             <div class="mt-3">
               <img id="img-preview" src="" class="img-fluid rounded d-none" alt="Preview gambar">
@@ -80,46 +70,51 @@
           </div>
         </div>
       </div>
-    </div> {{-- /row --}}
+    </div>
   </form>
 </div>
 
-{{-- Preview gambar sederhana (inline agar tidak tergantung @stack) --}}
-<script>
-  (function () {
-    const input = document.getElementById('gambar');
-    const preview = document.getElementById('img-preview');
-    if (!input || !preview) return;
-
-    input.addEventListener('change', function () {
-      const file = this.files && this.files[0];
-      if (file) {
-        preview.src = URL.createObjectURL(file);
-        preview.classList.remove('d-none');
-      } else {
-        preview.src = '';
-        preview.classList.add('d-none');
-      }
-    });
-  })();
-</script>
-
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.js-editor').forEach(function (el) {
-      ClassicEditor.create(el, {
-        toolbar: [
-          'heading','|','bold','italic','link',
-          'bulletedList','numberedList','blockQuote','|',
-          'undo','redo'
-        ]
-      }).then(ed => {
-        // opsional: tinggi minimum
-        ed.ui.view.editable.element.style.minHeight = '280px';
-      }).catch(console.error);
-    });
-  });
-</script>
+  (function () {
+    // Preview gambar
+    const fileInput = document.getElementById('gambar');
+    const preview   = document.getElementById('img-preview');
+    if (fileInput && preview) {
+      fileInput.addEventListener('change', function () {
+        const f = this.files && this.files[0];
+        if (f) {
+          preview.src = URL.createObjectURL(f);
+          preview.classList.remove('d-none');
+        } else {
+          preview.src = '';
+          preview.classList.add('d-none');
+        }
+      });
+    }
 
+    const form     = document.getElementById('form-berita');
+    const textarea = document.getElementById('konten');
+    const btn      = document.getElementById('btn-submit');
+
+    ClassicEditor.create(textarea, {
+      toolbar: ['heading','|','bold','italic','link','bulletedList','numberedList','blockQuote','|','undo','redo']
+    }).then(function (ed) {
+      ed.ui.view.editable.element.style.minHeight = '280px';
+
+      form.addEventListener('submit', function (e) {
+        const html = ed.getData() || '';
+        const text = html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
+        if (!text) {
+          e.preventDefault();
+          alert('Konten tidak boleh kosong.');
+          ed.editing.view.focus();
+          return;
+        }
+        textarea.value = html;           // pastikan data CKEditor terkirim
+        btn.disabled = true;             // cegah double submit
+      });
+    }).catch(console.error);
+  })();
+</script>
 @endsection

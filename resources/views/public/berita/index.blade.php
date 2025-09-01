@@ -146,14 +146,42 @@
             @endif
         </div>
 
-        {{-- Pagination --}}
-        <div class="mt-10 flex justify-center">
-            @if(isset($others))
-                {{ $others->onEachSide(1)->links() }}
+    @php
+    /** @var \Illuminate\Pagination\LengthAwarePaginator $paginator */
+    $paginator = isset($others) ? $others : ($berita ?? null);
+    @endphp
+
+    @if($paginator && $paginator->hasPages())
+    <div class="mt-10 flex justify-center">
+        <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center space-x-1">
+        {{-- Prev --}}
+        @if ($paginator->onFirstPage())
+            <span class="px-3 py-1 bg-gray-200 text-gray-500 rounded">‹</span>
+        @else
+            <a href="{{ $paginator->previousPageUrl() }}"
+            class="px-3 py-1 bg-white border rounded hover:bg-gray-100">‹</a>
+        @endif
+
+        {{-- Numbers --}}
+        @foreach ($paginator->getUrlRange(1, $paginator->lastPage()) as $page => $url)
+            @if ($page == $paginator->currentPage())
+            <span class="px-3 py-1 bg-red-500 text-white font-bold rounded">{{ $page }}</span>
             @else
-                {{ $berita->onEachSide(1)->links() }}
+            <a href="{{ $url }}" class="px-3 py-1 bg-white border rounded hover:bg-gray-100">{{ $page }}</a>
             @endif
-        </div>
+        @endforeach
+
+        {{-- Next --}}
+        @if ($paginator->hasMorePages())
+            <a href="{{ $paginator->nextPageUrl() }}"
+            class="px-3 py-1 bg-white border rounded hover:bg-gray-100">›</a>
+        @else
+            <span class="px-3 py-1 bg-gray-200 text-gray-500 rounded">›</span>
+        @endif
+        </nav>
+    </div>
+    @endif
+
     </div>
 </section>
 @endsection

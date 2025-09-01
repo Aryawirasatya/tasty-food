@@ -27,7 +27,39 @@
     <script src="{{ asset('assets/admin/vendor/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/demo/chart-area-demo.js') }}"></script>
      <script src="{{ asset('assets/admin/js/demo/chart-pie-demo.js') }}"></script>
-    
+     
+<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  // Delegasi klik: aman untuk DOM yang berubah-ubah
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.js-delete-btn');
+    if (!btn) return;
+
+    const form = btn.closest('form');
+    const title = btn.dataset.title || 'data ini';
+
+    // Kalau SweetAlert gagal load, jangan hapus diam-diam
+    if (typeof Swal === 'undefined') {
+      alert('Gagal memuat konfirmasi. Coba reload halaman.');
+      return;
+    }
+
+    Swal.fire({
+      title: 'Hapus data?',
+      text: `Anda yakin ingin menghapus "${title}"? Tindakan ini tidak bisa dibatalkan.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, hapus',
+      cancelButtonText: 'Batal',
+      reverseButtons: true,
+      focusCancel: true
+    }).then((r) => {
+      if (r.isConfirmed) form.submit();
+    });
+  });
+</script>
+{{-- <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js') }}" defer></script> --}}
+<script src="{{ asset('js/delete-confirm.js') }}" defer></script>
     @stack('scripts')
 </body>
 </html>
