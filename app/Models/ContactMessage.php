@@ -11,5 +11,6 @@ class ContactMessage extends Model
         'nama',
         'email',
         'pesan',
+        'recaptcha_score'
     ];
 }

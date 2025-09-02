@@ -32,7 +32,11 @@ class TentangController extends Controller
     }
 
     public function update(Request $request)
-{
+{   
+    $user = Auth::user();
+        if (! $user || ! $user->canAkses('akses_tentang')) {
+            abort(403, 'Anda tidak memiliki izin untuk mengakses halaman ini.');
+        }
     $tentang = Tentang::first(); // atau where id 1, dsb
 
     // Validasi jika perlu
